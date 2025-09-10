@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Icon, type IconName } from "./icons";
+import { Icon, type IconName, PlusIcon } from "./icons";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
 interface MenuItem {
   id: string;
@@ -9,23 +11,20 @@ interface MenuItem {
   icon: IconName;
   badge?: number;
   isActive?: boolean;
+  children?: MenuItem[];
 }
 
-interface MenuSection {
-  title?: string;
-  items: MenuItem[];
-}
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [openAccordion, setOpenAccordion] = useState<string>("my-assets");
 
   const mainMenuItems: MenuItem[] = [
     {
       id: "dashboard",
       label: "Dashboard",
       icon: "dashboard",
-      isActive: true,
+     
     },
     {
       id: "timeline",
@@ -66,8 +65,52 @@ const Sidebar = () => {
     {
       id: "my-assets",
       label: "My Assets",
-      icon: "document",
+      icon: "vault",
       badge: 3,
+      isActive: true,
+      children: [
+        {
+          id: "events",
+          label: "Events",
+          icon: "calendar",
+        },
+        {
+          id: "agendas",
+          label: "Agendas",
+          icon: "document",
+          isActive: true,
+        },
+        {
+          id: "ticketing",
+          label: "Ticketing",
+          icon: "document",
+        },
+      ],
+    },
+    {
+      id: "tours",
+      label: "Tours",
+      icon: "timeline",
+    },
+    {
+      id: "campaigns",
+      label: "Campaigns",
+      icon: "dashboard",
+    },
+    {
+      id: "venues",
+      label: "Venues",
+      icon: "vault",
+    },
+    {
+      id: "brands",
+      label: "Brands",
+      icon: "crm",
+    },
+    {
+      id: "destinations",
+      label: "Destinations",
+      icon: "timeline",
     },
     {
       id: "my-profiles",
@@ -111,27 +154,50 @@ const Sidebar = () => {
     { name: "Telegram", icon: "✈️" },
   ];
 
+
+
   const renderMenuItem = (item: MenuItem) => (
-    <div key={item.id} className="relative">
+    <div key={item.id} className="relative group px-6">
+      {/* Blue highlight bar - shows on hover or when active */}
       <div
-        className={`flex items-center space-x-3 px-4 py-3 rounded-lg cursor-pointer transition-colors ${
+        className={`absolute left-0 top-0 bottom-0 w-1 bg-blue-500 transition-opacity duration-200 ${
+          item.isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+        }`}
+      />
+      
+      <div
+        className={`flex items-center cursor-pointer  transition-all duration-200 ${
+          isCollapsed 
+            ? "justify-center py-3" 
+            : "space-x-2 px-4 py-3"
+        } ${
           item.isActive
             ? "bg-blue-50 text-blue-600"
-            : "text-gray-700 hover:bg-gray-50"
+            : "text-gray-700"
         }`}
       >
-        <div
-          className={`w-8 h-8 rounded-full flex items-center justify-center ${
-            item.isActive ? "bg-blue-100" : "bg-gray-100"
+        <Icon 
+          name={item.icon} 
+          className={`transition-all w-5 h-5 duration-200 ${
+            item.isActive 
+              ? "text-blue-600" 
+              : "text-gray-600 group-hover:text-blue-600"
           }`}
-        >
-          <Icon name={item.icon} />
-        </div>
+        />
+     
         {!isCollapsed && (
           <>
-            <span className="font-medium">{item.label}</span>
+            <span 
+              className={`transition-all text-sm font-normal duration-200 ${
+                item.isActive 
+                  ? "text-blue-600" 
+                  : "text-black group-hover:text-blue-600"
+              }`}
+            >
+              {item.label}
+            </span>
             {item.badge && (
-              <span className="bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center ml-auto">
+              <span className="bg-red-500 text-white text-xs rounded-full size-5 flex items-center justify-center ml-auto">
                 {item.badge}
               </span>
             )}
@@ -141,16 +207,18 @@ const Sidebar = () => {
     </div>
   );
 
+
   const renderMenuSection = (title: string, items: MenuItem[]) => (
     <div className="mb-6">
       {!isCollapsed && (
-        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-4">
+        <h3 className="text-xs font-semibold text-black px-6 py-2 uppercase tracking-wider">
           {title}
         </h3>
       )}
       <div className="space-y-1">{items.map(renderMenuItem)}</div>
     </div>
   );
+
 
   return (
     <div className="relative flex">
@@ -191,14 +259,144 @@ const Sidebar = () => {
         </div>
 
       {/* Navigation */}
-      <div className="flex-1 overflow-y-auto py-4 scrollbar-hide">
+      <div className="flex-1 overflow-y-auto scrollbar-hide">
         {/* Main Menu */}
-        <div className="mb-6">
+        {renderMenuSection("Main Menu", mainMenuItems)}
+        {/* <div className="mb-6">
           <div className="space-y-1">{mainMenuItems.map(renderMenuItem)}</div>
-        </div>
+          
+        </div> */}
 
-        {/* User Menu */}
-        {renderMenuSection("User Menu", userMenuItems)}
+        {/* User Menu with Individual Accordions */}
+        <div className="mb-6">
+          {!isCollapsed && (
+            <h3 className="text-xs font-semibold text-black px-6 py-2 uppercase tracking-wider">
+              User Menu
+            </h3>
+          )}
+          <div className="space-y-1">
+            {userMenuItems.map((item) => {
+              if (item.children) {
+                return (
+                  <Accordion 
+                    key={item.id} 
+                    type="single" 
+                    collapsible 
+                    className="w-full"
+                    value={openAccordion}
+                    onValueChange={setOpenAccordion}
+                  >
+                    <AccordionItem value={item.id} className="border-none">
+                      <div className="relative group">
+                        {/* Blue highlight bar - shows on hover or when active */}
+                        <div
+                          className={`absolute left-0 top-0 bottom-0 w-1 bg-blue-500 transition-opacity duration-200 ${
+                            item.isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                          }`}
+                        />
+                        <AccordionTrigger 
+                          className={`px-6 py-3 hover:no-underline [&>svg]:hidden ${
+                            isCollapsed ? "justify-center" : "justify-start"
+                          } ${
+                            item.isActive
+                              ? " text-blue-600"
+                              : "text-gray-700"
+                          }`}
+                        >
+                        {!isCollapsed && (
+                          <div className="flex items-center space-x-2 w-full">
+                            {openAccordion === item.id ? (
+                              <ChevronUpIcon className="text-muted-foreground size-4 shrink-0 transition-transform duration-200" />
+                            ) : (
+                              <ChevronDownIcon className="text-muted-foreground size-4 shrink-0 transition-transform duration-200" />
+                            )}
+                            <Icon 
+                              name={item.icon} 
+                              className={`w-5 h-5 ${
+                                item.isActive ? "text-blue-600" : "text-gray-600"
+                              }`}
+                            />
+                            <span 
+                              className={`text-sm font-normal ${
+                                item.isActive ? "text-blue-600" : "text-black"
+                              }`}
+                            >
+                              {item.label}
+                            </span>
+                             <div className="flex gap-2 ml-auto">
+                              {item.badge && (
+                                <span className="bg-red-500 text-white text-xs rounded-full size-5 flex items-center justify-center">
+                                  {item.badge}
+                                </span>
+                              )}
+                              <PlusIcon className="w-4 h-4 text-gray-400" />
+                             </div>
+                       
+                          </div>
+                        )}
+                        {isCollapsed && (
+                          <Icon 
+                            name={item.icon} 
+                            className={`w-5 h-5 ${
+                              item.isActive ? "text-blue-600" : "text-gray-600"
+                            }`}
+                          />
+                        )}
+                      </AccordionTrigger>
+                      </div>
+                      <AccordionContent className="pb-0">
+                        <div className=" ">
+                          {item.children.map((child) => (
+                            <div key={child.id} className="relative group ">
+                              <div
+                                className={`flex items-center cursor-pointer transition-all duration-200 border-l ml-8 border-gray-300 ${
+                                  isCollapsed 
+                                    ? "justify-center py-2 px-6" 
+                                    : "space-x-2 px-8 py-2"
+                                } ${
+                                  child.isActive
+                                    ? " text-blue-600"
+                                    : "text-gray-700"
+                                }`}
+                              >
+                                {/* {!isCollapsed && (
+                                  <div className="w-4 h-4 flex items-center justify-center">
+                                    <div className="w-0.5 h-4 bg-gray-300"></div>
+                                  </div>
+                                )} */}
+                                <Icon 
+                                  name={child.icon} 
+                                  className={`transition-all w-5 h-5 duration-200 ${
+                                    child.isActive 
+                                      ? "text-blue-600" 
+                                      : "text-gray-600 group-hover:text-blue-600"
+                                  }`}
+                                />
+                                {!isCollapsed && (
+                                  <span 
+                                    className={`transition-all text-sm font-normal duration-200 ${
+                                      child.isActive 
+                                        ? "text-blue-600" 
+                                        : "text-black group-hover:text-blue-600"
+                                    }`}
+                                  >
+                                    {child.label}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                );
+              } else {
+                return renderMenuItem(item);
+              }
+            })}
+          </div>
+        </div>
 
         {/* Help */}
         {renderMenuSection("Help", helpItems)}
