@@ -20,6 +20,11 @@ import {
   EventzrLogoCollapsed,
   MyZarsIcon,
   MyRfpsIcon,
+  WhatsAppIcon,
+  InstagramIcon,
+  FacebookIcon,
+  TwitterXIcon,
+  TelegramIcon,
 } from './index';
 
 export type IconName = 
@@ -43,7 +48,12 @@ export type IconName =
   | 'eventzr-logo'
   | 'eventzr-logo-collapsed'
   | 'my-zars'
-  | 'my-rfps';
+  | 'my-rfps'
+  | 'whatsapp'
+  | 'instagram'
+  | 'facebook'
+  | 'twitter-x'
+  | 'telegram';
 
 interface IconProps {
   name: IconName;
@@ -94,6 +104,16 @@ export const Icon = ({ name, className }: IconProps) => {
       return <MyZarsIcon className={className} />;
     case 'my-rfps':
       return <MyRfpsIcon className={className} />;
+    case 'whatsapp':
+      return <WhatsAppIcon className={className} />;
+    case 'instagram':
+      return <InstagramIcon className={className} />;
+    case 'facebook':
+      return <FacebookIcon className={className} />;
+    case 'twitter-x':
+      return <TwitterXIcon className={className} />;
+    case 'telegram':
+      return <TelegramIcon className={className} />;
     default:
       return null;
   }

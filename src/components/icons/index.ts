@@ -20,6 +20,11 @@ export { EventzrLogoCollapsed } from './EventzrLogoCollapsed';
 export { default as PlusIcon } from './PlusIcon';
 export { MyZarsIcon } from './MyZarsIcon';
 export { MyRfpsIcon } from './MyRfpsIcon';
+export { WhatsAppIcon } from './WhatsAppIcon';
+export { InstagramIcon } from './InstagramIcon';
+export { FacebookIcon } from './FacebookIcon';
+export { TwitterXIcon } from './TwitterXIcon';
+export { TelegramIcon } from './TelegramIcon';
 
 // Unified Icon component
 export { Icon, type IconName } from './Icon';

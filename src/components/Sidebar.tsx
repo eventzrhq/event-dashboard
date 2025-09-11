@@ -10,6 +10,7 @@ import {
 } from "./ui/accordion";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
+
 interface MenuItem {
   id: string;
   label: string;
@@ -256,11 +257,11 @@ const Sidebar = () => {
   ];
 
   const socialIcons = [
-    { name: "WhatsApp", icon: "💬" },
-    { name: "Instagram", icon: "📷" },
-    { name: "Facebook", icon: "📘" },
-    { name: "X", icon: "🐦" },
-    { name: "Telegram", icon: "✈️" },
+    { name: "WhatsApp", icon: "whatsapp", url: "https://wa.me/your-whatsapp-number" },
+    { name: "Instagram", icon: "instagram", url: "https://instagram.com/your-instagram" },
+    { name: "Facebook", icon: "facebook", url: "https://facebook.com/your-facebook" },
+    { name: "X", icon: "twitter-x", url: "https://x.com/your-twitter" },
+    { name: "Telegram", icon: "telegram", url: "https://t.me/your-telegram" },
   ];
 
   const renderMenuItem = (item: MenuItem) => {
@@ -456,7 +457,7 @@ const Sidebar = () => {
                                       {item.badge}
                                     </span>
                                   )}
-                                  <button
+                                  <div
                                     className="cursor-pointer pointer-events-auto"
                                     onClick={(e) => {
                                       e.stopPropagation();
@@ -468,7 +469,7 @@ const Sidebar = () => {
                                     }}
                                   >
                                     <PlusIcon className="w-4 h-4 text-gray-400 hover:text-gray-600" />
-                                  </button>
+                                  </div>
                                 </div>
                               </div>
                             )}
@@ -718,23 +719,26 @@ const Sidebar = () => {
 
         {/* Social Media Links */}
 
-        {/* <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
           <div
             className={`flex ${
-              isCollapsed ? "justify-center" : "justify-center space-x-3"
+              isCollapsed ? "justify-center" : "justify-center "
             }`}
           >
-            {socialIcons.map((social, index) => (
-              <div
-                key={index}
-                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                title={social.name}
-              >
-                <span className="text-sm">{social.icon}</span>
-              </div>
-            ))}
+              {(isCollapsed ? socialIcons.slice(0, 1) : socialIcons).map((social, index) => (
+                <a
+                  key={index}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="dark:bg-gray-800 p-[11px] flex items-center justify-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors rounded-full"
+                  title={social.name}
+                >
+                  <Icon name={social.icon as IconName} className="size-[18px] text-gray-600 dark:text-gray-300" />
+                </a>
+              ))}
           </div>
-        </div> */}
+        </div>
       </div>
 
       {/* Collapse Button - Outside when collapsed */}
