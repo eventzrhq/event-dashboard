@@ -283,7 +283,7 @@ const Sidebar = () => {
         <div
           className={`flex items-center cursor-pointer transition-all duration-200 ${
             isCollapsed ? "justify-center py-2" : "py-2"
-          } ${isSelected ? " text-blue-600" : "text-gray-700"}`}
+          } ${isSelected ? " text-blue-600 dark:text-blue-400" : "text-gray-700 dark:text-gray-200"}`}
         >
           <div className={`${isCollapsed ? "flex justify-center px-2" : "flex items-center justify-between px-2 w-full"}`}>
             <div className="flex items-center space-x-3">
@@ -292,8 +292,8 @@ const Sidebar = () => {
                   name={item.icon}
                   className={`transition-all w-5 h-5 duration-200 ${
                     isSelected
-                      ? "text-blue-600"
-                      : "text-gray-600 group-hover:text-blue-600"
+                      ? "text-blue-600 dark:text-blue-400"
+                      : "text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400"
                   }`}
                 />
               )}
@@ -302,8 +302,8 @@ const Sidebar = () => {
                 <span
                   className={`transition-all text-sm font-normal duration-200 ${
                     isSelected
-                      ? "text-blue-600"
-                      : "text-black group-hover:text-blue-600"
+                      ? "text-blue-600 dark:text-blue-400"
+                      : "text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400"
                   }`}
                 >
                   {item.label}
@@ -325,7 +325,7 @@ const Sidebar = () => {
   const renderMenuSection = (title: string, items: MenuItem[]) => (
     <div className="py-2 px-4">
       {!isCollapsed && (
-        <h3 className="text-xs font-semibold text-black px-5 py-2 uppercase tracking-wider">
+        <h3 className="text-xs font-semibold text-gray-700 dark:text-gray-300 px-5 py-2 uppercase tracking-wider">
           {title}
         </h3>
       )}
@@ -388,7 +388,7 @@ const Sidebar = () => {
           {/* User Menu with Individual Accordions */}
           <div className="py-2 px-4">
             {!isCollapsed && (
-              <h3 className="text-xs font-semibold text-black px-5 py-2 uppercase tracking-wider">
+              <h3 className="text-xs font-semibold text-gray-700 dark:text-gray-300 px-5 py-2 uppercase tracking-wider">
                 User Menu
               </h3>
             )}
@@ -421,7 +421,7 @@ const Sidebar = () => {
                              className={`py-2 hover:no-underline [&>svg]:hidden group ${
                                isCollapsed ? "justify-center" : "justify-start"
                              } ${
-                               selectedItem === item.id ? " text-blue-600" : "text-gray-700"
+                               selectedItem === item.id ? " text-blue-600 dark:text-blue-400" : "text-gray-700 dark:text-gray-200"
                              } hover:text-blue-600 transition-all duration-200`}
                              onClick={() => setSelectedItem(item.id)}
                            >
@@ -437,16 +437,16 @@ const Sidebar = () => {
                                     name={item.icon}
                                     className={`w-5 h-5 transition-all duration-200 ${
                                       selectedItem === item.id
-                                        ? "text-blue-600"
-                                        : "text-gray-600 group-hover:text-blue-600"
+                                        ? "text-blue-600 dark:text-blue-400"
+                                        : "text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400"
                                     }`}
                                   />
                                 )}
                                 <span
                                   className={`text-sm font-normal transition-all duration-200 ${
                                     selectedItem === item.id
-                                      ? "text-blue-600"
-                                      : "text-black group-hover:text-blue-600"
+                                      ? "text-blue-600 dark:text-blue-400"
+                                      : "text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400"
                                   }`}
                                 >
                                   {item.label}
@@ -468,7 +468,7 @@ const Sidebar = () => {
                                       );
                                     }}
                                   >
-                                    <PlusIcon className="w-4 h-4 text-gray-400 hover:text-gray-600" />
+                                    <PlusIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300" />
                                   </div>
                                 </div>
                               </div>
@@ -480,8 +480,8 @@ const Sidebar = () => {
                                      name={item.icon}
                                      className={`w-5 h-5 ${
                                        selectedItem === item.id
-                                         ? "text-blue-600"
-                                         : "text-gray-600"
+                                         ? "text-blue-600 dark:text-blue-400"
+                                         : "text-gray-600 dark:text-gray-300"
                                      }`}
                                    />
                                  )}
@@ -519,18 +519,18 @@ const Sidebar = () => {
                                              ? "justify-center"
                                              : "justify-start"
                                          } ${
-                                           selectedChild === child.id ? "text-blue-600" : "text-gray-700"
+                                           selectedChild === child.id ? "text-blue-600 dark:text-blue-400" : "text-gray-700 dark:text-gray-200"
                                          } hover:text-blue-600 transition-all duration-200`}
                                          onClick={() => setSelectedChild(child.id)}
                                        >
                                          {!isCollapsed && (
                                            <div className="flex items-center space-x-2 px-8 w-full">
                                              {openChildAccordion === child.id ? (
-                                               <ChevronUpIcon className="text-muted-foreground size-4 shrink-0 transition-transform duration-200" />
+                                               <ChevronUpIcon className="text-gray-500 dark:text-gray-400 size-4 shrink-0 transition-transform duration-200" />
                                              ) : (
-                                               <ChevronDownIcon className="text-muted-foreground size-4 shrink-0 transition-transform duration-200" />
+                                               <ChevronDownIcon className="text-gray-500 dark:text-gray-400 size-4 shrink-0 transition-transform duration-200" />
                                              )}
-                                             <span className="text-sm font-normal text-black">
+                                             <span className="text-sm font-normal text-gray-700 dark:text-gray-200">
                                                {child.label}
                                              </span>
                                            </div>
@@ -556,8 +556,8 @@ const Sidebar = () => {
                                                      : "py-2"
                                                  } ${
                                                    selectedSubChild === subChild.id
-                                                     ? " text-blue-600"
-                                                     : "text-gray-700"
+                                                     ? " text-blue-600 dark:text-blue-400"
+                                                     : "text-gray-700 dark:text-gray-200"
                                                  }`}
                                                  onClick={() => setSelectedSubChild(subChild.id)}
                                                >
@@ -566,8 +566,8 @@ const Sidebar = () => {
                                                      <span
                                                        className={`transition-all text-sm font-normal duration-200 ${
                                                          selectedSubChild === subChild.id
-                                                           ? "text-blue-600"
-                                                           : "text-black group-hover:text-blue-600"
+                                                           ? "text-blue-600 dark:text-blue-400"
+                                                           : "text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400"
                                                        }`}
                                                      >
                                                        {subChild.label}
@@ -589,8 +589,8 @@ const Sidebar = () => {
                                          : "py-2"
                                      } ${
                                        selectedChild === child.id
-                                         ? " text-blue-600"
-                                         : "text-gray-700 hover:text-blue-600"
+                                         ? " text-blue-600 dark:text-blue-400"
+                                         : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
                                      }`}
                                      onClick={() => setSelectedChild(child.id)}
                                    >
@@ -599,8 +599,8 @@ const Sidebar = () => {
                                          <span
                                            className={`transition-all text-sm font-normal duration-200 ${
                                              selectedChild === child.id
-                                               ? "text-blue-600"
-                                               : "text-black group-hover:text-blue-600"
+                                               ? "text-blue-600 dark:text-blue-400"
+                                               : "text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400"
                                            }`}
                                          >
                                            {child.label}
@@ -629,7 +629,7 @@ const Sidebar = () => {
           {/* Others */}
           <div className="py-2 px-4">
             {!isCollapsed && (
-              <h3 className="text-xs font-semibold text-black uppercase tracking-wider mb-3 px-4">
+              <h3 className="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-3 px-4">
                 Others
               </h3>
             )}
@@ -647,15 +647,15 @@ const Sidebar = () => {
                         <div className={`${isCollapsed ? "flex justify-center pl-0" : "flex items-center gap-x-2 pl-6 w-full"}`}>
                           {isCollapsed ? (
                             <ThemeIcon
-                              className={`transition-all w-5 h-5 duration-200 text-gray-600 group-hover:text-blue-600`}
+                              className={`transition-all w-5 h-5 duration-200 text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400`}
                             />
                           ) : (
                             <>
                               <ThemeIcon
-                                className={`transition-all w-5 h-5 duration-200 text-gray-600 group-hover:text-blue-600`}
+                                className={`transition-all w-5 h-5 duration-200 text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400`}
                               />
                               <div className="flex items-center justify-between w-full ">
-                                <span className="text-sm font-normal text-gray-700 dark:text-gray-300 flex-1 whitespace-nowrap">Change Theme</span>
+                                <span className="text-sm font-normal text-gray-700 dark:text-gray-200 flex-1 whitespace-nowrap">Change Theme</span>
                                 <div className="flex items-center">
                                   <button
                                     onClick={() => setIsDarkMode(!isDarkMode)}
@@ -669,7 +669,7 @@ const Sidebar = () => {
                                       }`}
                                     />
                                     <div className="absolute inset-0 flex items-center justify-between px-1">
-                                      <SunIcon className={`w-3 h-3 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`} />
+                                      <SunIcon className={`w-3 h-3 ${isDarkMode ? "text-gray-300" : "text-gray-600"}`} />
                                       <MoonIcon className={`w-3 h-3 ${isDarkMode ? "text-white" : "text-gray-400"}`} />
                                     </div>
                                   </button>
@@ -691,14 +691,14 @@ const Sidebar = () => {
                         <div className={`${isCollapsed ? "flex justify-center pl-0" : "flex items-center gap-x-2 pl-6 w-full"}`}>
                           {isCollapsed ? (
                             <DownloadIcon
-                              className={`transition-all w-5 h-5 duration-200 text-gray-600 group-hover:text-blue-600`}
+                              className={`transition-all w-5 h-5 duration-200 text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400`}
                             />
                           ) : (
                             <>
                               <DownloadIcon
-                                className={`transition-all w-5 h-5 duration-200 text-gray-600 group-hover:text-blue-600`}
+                                className={`transition-all w-5 h-5 duration-200 text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400`}
                               />
-                              <span className="text-sm font-normal text-gray-700 dark:text-gray-300 flex-1 whitespace-nowrap">Download App</span>
+                              <span className="text-sm font-normal text-gray-700 dark:text-gray-200 flex-1 whitespace-nowrap">Download App</span>
                               <div className="flex items-center space-x-2">
                                 <AppStoreIcon className="size-6"/>
                                 <PlayStoreIcon className="size-6"/>
@@ -731,10 +731,10 @@ const Sidebar = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="dark:bg-gray-800 p-[11px] flex items-center justify-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors rounded-full"
+                  className=" p-[11px] flex items-center justify-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors rounded-full"
                   title={social.name}
                 >
-                  <Icon name={social.icon as IconName} className="size-[18px] text-gray-600 dark:text-gray-300" />
+                  <Icon name={social.icon as IconName} className=" text-gray-600 dark:text-gray-200 hover:text-gray-800 dark:hover:text-white transition-colors" />
                 </a>
               ))}
           </div>
