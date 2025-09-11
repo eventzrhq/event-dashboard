@@ -5,6 +5,8 @@ interface DashboardIconProps {
 export const DashboardIcon = ({ className = "w-5 h-5" }: DashboardIconProps) => {
   return (
     <svg
+      width="18"
+      height="18"
       viewBox="0 0 18 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

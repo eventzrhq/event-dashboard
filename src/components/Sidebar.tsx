@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Icon, type IconName, PlusIcon, SunIcon, MoonIcon, AppStoreIcon, PlayStoreIcon, ThemeIcon, DownloadIcon } from "./icons";
+import { Icon, type IconName, ThemeIcon, DownloadIcon } from "./icons";
 import {
   Accordion,
   AccordionContent,
@@ -337,7 +337,7 @@ const Sidebar = () => {
     <div className="relative flex">
       {/* Sidebar */}
       <div
-        className={`bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 flex flex-col h-screen transition-all duration-300 ${
+        className={`bg-white dark:bg-slate-800/50 border-r border-gray-200 dark:border-slate-700/50 flex flex-col h-screen transition-all duration-300 backdrop-blur-sm ${
           isCollapsed ? "w-16" : "w-64"
         }`}
       >
@@ -357,7 +357,7 @@ const Sidebar = () => {
         >
           <div className="flex items-center justify-between">
             {isCollapsed ? (
-              <div className="flex justify-center w-8 shrink-0">
+              <div className="flex justify-center size-8 shrink-0">
                 <Icon name="eventzr-logo-collapsed" />
               </div>
             ) : (
@@ -468,7 +468,7 @@ const Sidebar = () => {
                                       );
                                     }}
                                   >
-                                    <PlusIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300" />
+                                    <Icon name="user-plus-custom" className="w-4 h-4 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300" />
                                   </div>
                                 </div>
                               </div>
@@ -669,8 +669,8 @@ const Sidebar = () => {
                                       }`}
                                     />
                                     <div className="absolute inset-0 flex items-center justify-between px-1">
-                                      <SunIcon className={`w-3 h-3 ${isDarkMode ? "text-gray-300" : "text-gray-600"}`} />
-                                      <MoonIcon className={`w-3 h-3 ${isDarkMode ? "text-white" : "text-gray-400"}`} />
+                                      <Icon name="sun" className={`w-3 h-3 ${isDarkMode ? "text-gray-300" : "text-gray-600"}`} />
+                                      <Icon name="moon" className={`w-3 h-3 ${isDarkMode ? "text-white" : "text-gray-400"}`} />
                                     </div>
                                   </button>
                                 </div>
@@ -700,8 +700,8 @@ const Sidebar = () => {
                               />
                               <span className="text-sm font-normal text-gray-700 dark:text-gray-200 flex-1 whitespace-nowrap">Download App</span>
                               <div className="flex items-center space-x-2">
-                                <AppStoreIcon className="size-6"/>
-                                <PlayStoreIcon className="size-6"/>
+                                <Icon name="app-store" className="size-6"/>
+                                <Icon name="play-store" className="size-6"/>
                               </div>
                             </>
                           )}
@@ -731,7 +731,7 @@ const Sidebar = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className=" p-[11px] flex items-center justify-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors rounded-full"
+                  className=" p-2 flex items-center justify-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors rounded-full"
                   title={social.name}
                 >
                   <Icon name={social.icon as IconName} className=" text-gray-600 dark:text-gray-200 hover:text-gray-800 dark:hover:text-white transition-colors" />
