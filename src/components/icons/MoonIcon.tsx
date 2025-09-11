@@ -5,11 +5,26 @@ interface MoonIconProps {
 export const MoonIcon = ({ className = "w-4 h-4" }: MoonIconProps) => {
   return (
     <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
       className={className}
-      fill="currentColor"
-      viewBox="0 0 24 24"
     >
-      <path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+      <path
+        opacity="0.4"
+        d="M17.917 11.7313C16.9172 12.2651 15.7754 12.5677 14.5629 12.5677C10.6246 12.5677 7.43188 9.37504 7.43188 5.43669C7.43188 4.22419 7.7345 3.08238 8.26831 2.08264C4.72333 2.91346 2.08362 6.09525 2.08362 9.89358C2.08362 14.3242 5.67537 17.916 10.106 17.916C13.9043 17.916 17.0861 15.2763 17.917 11.7313Z"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M17.917 11.7313C17.0861 15.2763 13.9043 17.916 10.106 17.916C5.67537 17.916 2.08362 14.3242 2.08362 9.89358C2.08362 6.09525 4.72333 2.91346 8.26831 2.08264"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 };

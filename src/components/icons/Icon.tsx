@@ -15,8 +15,11 @@ import {
   SunIcon,
   MoonIcon,
   AppStoreIcon,
+  PlayStoreIcon,
   EventzrLogo,
   EventzrLogoCollapsed,
+  MyZarsIcon,
+  MyRfpsIcon,
 } from './index';
 
 export type IconName = 
@@ -36,8 +39,11 @@ export type IconName =
   | 'sun'
   | 'moon'
   | 'app-store'
+  | 'play-store'
   | 'eventzr-logo'
-  | 'eventzr-logo-collapsed';
+  | 'eventzr-logo-collapsed'
+  | 'my-zars'
+  | 'my-rfps';
 
 interface IconProps {
   name: IconName;
@@ -78,10 +84,16 @@ export const Icon = ({ name, className }: IconProps) => {
       return <MoonIcon className={className} />;
     case 'app-store':
       return <AppStoreIcon className={className} />;
+    case 'play-store':
+      return <PlayStoreIcon className={className} />;
     case 'eventzr-logo':
       return <EventzrLogo className={className} />;
     case 'eventzr-logo-collapsed':
       return <EventzrLogoCollapsed className={className} />;
+    case 'my-zars':
+      return <MyZarsIcon className={className} />;
+    case 'my-rfps':
+      return <MyRfpsIcon className={className} />;
     default:
       return null;
   }

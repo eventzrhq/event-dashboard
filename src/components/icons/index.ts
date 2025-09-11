@@ -14,9 +14,12 @@ export { ChevronRightIcon } from './ChevronRightIcon';
 export { SunIcon } from './SunIcon';
 export { MoonIcon } from './MoonIcon';
 export { AppStoreIcon } from './AppStoreIcon';
+export { PlayStoreIcon } from './PlayStoreIcon';
 export { EventzrLogo } from './EventzrLogo';
 export { EventzrLogoCollapsed } from './EventzrLogoCollapsed';
 export { default as PlusIcon } from './PlusIcon';
+export { MyZarsIcon } from './MyZarsIcon';
+export { MyRfpsIcon } from './MyRfpsIcon';
 
 // Unified Icon component
 export { Icon, type IconName } from './Icon';

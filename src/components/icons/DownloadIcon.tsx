@@ -5,16 +5,24 @@ interface DownloadIconProps {
 export const DownloadIcon = ({ className = "w-5 h-5" }: DownloadIconProps) => {
   return (
     <svg
-      className={className}
+      viewBox="0 0 20 20"
       fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
+        d="M2.5 11.666L2.69487 12.2181C3.45333 14.3671 3.83256 15.4416 4.69785 16.0538C5.56313 16.666 6.70258 16.666 8.98147 16.666H11.0185C13.2974 16.666 14.4369 16.666 15.3022 16.0538C16.1674 15.4416 16.5467 14.3671 17.3051 12.2181L17.5 11.666"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+      />
+      <path
+        opacity="0.4"
+        d="M9.99996 11.666V3.33264M9.99996 11.666C9.41644 11.666 8.32623 10.0041 7.91663 9.58264M9.99996 11.666C10.5835 11.666 11.6737 10.0041 12.0833 9.58264"
+        stroke="currentColor"
+        strokeWidth="1.25"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={2}
-        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
       />
     </svg>
   );
