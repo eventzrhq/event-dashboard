@@ -1,10 +1,9 @@
 "use client";
 
-import { Icon } from "./icons";
 
 const MainContent = () => {
   return (
-    <div className="flex-1 bg-gray-50 dark:bg-slate-900/50 p-6">
+    <div className="flex-1 bg-gray-50 dark:bg-slate-900/50 p-6 overflow-y-auto scrollbar-hide">
       <div className="max-w-7xl mx-auto">
         {/* Welcome Section */}
         <div className="mb-8">

@@ -20,13 +20,18 @@ interface MenuItem {
   children?: MenuItem[];
 }
 
-const Sidebar = () => {
+interface SidebarProps {
+  onNavigate?: (page: string) => void;
+  currentPage?: string;
+}
+
+const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [openAccordion, setOpenAccordion] = useState<string>("my-assets");
   const [openChildAccordion, setOpenChildAccordion] = useState<string | undefined>(
     undefined
   );
-  const [selectedItem, setSelectedItem] = useState<string>("my-assets");
+  const [selectedItem, setSelectedItem] = useState<string>(currentPage || "dashboard");
   const [selectedChild, setSelectedChild] = useState<string | null>(null);
   const [selectedSubChild, setSelectedSubChild] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -271,7 +276,12 @@ const Sidebar = () => {
       <div 
         key={item.id} 
         className={`relative group ${isCollapsed ? "pl-0" : "pl-6"}`}
-        onClick={() => setSelectedItem(item.id)}
+        onClick={() => {
+          setSelectedItem(item.id);
+          if (onNavigate) {
+            onNavigate(item.id);
+          }
+        }}
       >
         {/* Blue highlight bar - shows on hover or when selected */}
         <div
@@ -423,7 +433,12 @@ const Sidebar = () => {
                              } ${
                                selectedItem === item.id ? " text-blue-600 dark:text-blue-400" : "text-gray-700 dark:text-gray-200"
                              } hover:text-blue-600 transition-all duration-200`}
-                             onClick={() => setSelectedItem(item.id)}
+                             onClick={() => {
+          setSelectedItem(item.id);
+          if (onNavigate) {
+            onNavigate(item.id);
+          }
+        }}
                            >
                             {!isCollapsed && (
                               <div className="flex items-center space-x-3 px-2 w-full">

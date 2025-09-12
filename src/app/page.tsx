@@ -1,29 +1,26 @@
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Header";
+"use client";
+
+import { useState } from "react";
+import Layout from "@/components/Layout";
 import MainContent from "@/components/MainContent";
-import Footer from "@/components/Footer";
-import FloatingActionButtons from "@/components/FloatingActionButtons";
+import Calendar from "@/components/Calendar";
 
 export default function Home() {
+  const [currentPage, setCurrentPage] = useState("dashboard");
+
+  const renderContent = () => {
+    switch (currentPage) {
+      case "calendar":
+        return <Calendar />;
+      case "dashboard":
+      default:
+        return <MainContent />;
+    }
+  };
+
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-slate-900 dark:dark-mode-gradient">
-      {/* Sidebar */}
-      <Sidebar />
-      
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col overflow-hidden relative">
-        {/* Header */}
-        <Header />
-        
-        {/* Main Content */}
-        <MainContent />
-        
-        {/* Footer */}
-        <Footer />
-        
-        {/* Floating Action Buttons */}
-        <FloatingActionButtons />
-      </div>
-    </div>
+    <Layout currentPage={currentPage} onNavigate={setCurrentPage}>
+      {renderContent()}
+    </Layout>
   );
 }
