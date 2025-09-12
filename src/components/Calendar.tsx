@@ -14,38 +14,42 @@ interface Event {
 }
 
 const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date(2024, 7, 1)); // August 2024
+  const [currentDate, setCurrentDate] = useState(new Date()); // Current date
   const [viewMode, setViewMode] = useState<"month" | "week" | "day">("month");
 
-  // Sample events data
+  // Sample events data - using current month
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth();
+  
   const events: Event[] = [
     {
       id: "1",
       title: "4p Repeating Event",
-      date: new Date(2024, 7, 14), // August 14, 2024
+      date: new Date(currentYear, currentMonth, 14),
       type: "single",
       color: "bg-blue-500", // Blue for single events
     },
     {
       id: "2",
       title: "Long Event",
-      date: new Date(2024, 7, 25), // August 25, 2024
-      endDate: new Date(2024, 7, 26), // August 26, 2024
+      date: new Date(currentYear, currentMonth, 25),
+      endDate: new Date(currentYear, currentMonth, 26),
       type: "long",
       color: "bg-[#6560F0]", // Purple for long events
     },
     {
       id: "3",
       title: "All Day Event",
-      date: new Date(2024, 7, 27), // August 27, 2024
+      date: new Date(currentYear, currentMonth, 27),
       type: "all-day",
       color: "bg-[#6560F0]", // Purple for all-day events
     },
     {
       id: "4",
       title: "Long Event",
-      date: new Date(2024, 7, 30), // August 30, 2024
-      endDate: new Date(2024, 7, 31), // August 31, 2024
+      date: new Date(currentYear, currentMonth, 30),
+      endDate: new Date(currentYear, currentMonth + 1, 1),
       type: "long",
       color: "bg-[#6560F0]", // Purple for long events
     },
@@ -53,30 +57,45 @@ const Calendar = () => {
     {
       id: "5",
       title: "9a Team Meeting",
-      date: new Date(2024, 7, 5), // August 5, 2024
+      date: new Date(currentYear, currentMonth, 5),
       type: "single",
       color: "bg-blue-500", // Blue for single events
     },
     {
       id: "6",
       title: "2p Conference",
-      date: new Date(2024, 7, 8), // August 8, 2024
+      date: new Date(currentYear, currentMonth, 8),
       type: "single",
       color: "bg-blue-500", // Blue for single events
     },
     {
       id: "7",
       title: "Workshop",
-      date: new Date(2024, 7, 15), // August 15, 2024
+      date: new Date(currentYear, currentMonth, 15),
       type: "all-day",
       color: "bg-[#6560F0]", // Purple for all-day events
     },
     {
       id: "8",
       title: "5p Project Deadline",
-      date: new Date(2024, 7, 20), // August 20, 2024
+      date: new Date(currentYear, currentMonth, 20),
       type: "single",
       color: "bg-blue-500", // Blue for single events
+    },
+    // Add some events for today and nearby days
+    {
+      id: "9",
+      title: "Today's Event",
+      date: new Date(),
+      type: "single",
+      color: "bg-blue-500",
+    },
+    {
+      id: "10",
+      title: "Tomorrow Meeting",
+      date: new Date(currentYear, currentMonth, now.getDate() + 1),
+      type: "single",
+      color: "bg-blue-500",
     },
   ];
 
@@ -335,13 +354,13 @@ const Calendar = () => {
                         >
                           {event.type === "single" ? (
                             <>
-                              <div className={`w-2 h-2 rounded-full ${event.color}`}></div>
-                              <span className="text-gray-700 dark:text-gray-300 truncate">
+                              <div className={`w-2 h-2 rounded-full ${event.color} flex-shrink-0`}></div>
+                              <span className="text-gray-700 dark:text-gray-300 truncate text-xs">
                                 {event.title}
                               </span>
                             </>
                           ) : (
-                            <div className={`w-full ${event.color} rounded-full h-6 flex items-center justify-center text-center`}>
+                            <div className={`w-full ${event.color} rounded-full h-6 flex items-center justify-center text-center text-xs`}>
                               {event.title}
                             </div>
                           )}
