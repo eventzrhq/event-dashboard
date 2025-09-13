@@ -42,13 +42,9 @@ const FloatingActionButtons = () => {
       {/* SideDrawer - Always rendered for functionality */}
       <SideDrawer 
         open={isDrawerOpen} 
-        onOpenChange={(open) => {
-          console.log('SideDrawer onOpenChange called with:', open, 'current state:', isDrawerOpen);
-          // Completely ignore any closing attempts from SideDrawer
-          if (open) {
-            setIsDrawerOpen(true);
-          }
-          // Do nothing if open is false - never allow SideDrawer to close
+        onOpenChange={() => {
+          // Completely ignore ALL onOpenChange calls from SideDrawer
+          // We handle all state changes manually through our buttons only
         }}
       >
         {/* Chat Drawer */}
