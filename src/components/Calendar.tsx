@@ -160,7 +160,7 @@ const Calendar = () => {
 
   const getEventsForDate = (date: Date) => {
     return events.filter((event) => {
-      if (event.type === "long" && event.endDate) {
+      if (event.type === "long" && event.endDate != null) {
         return date >= event.date && date <= event.endDate;
       }
       return event.date.toDateString() === date.toDateString();
@@ -168,7 +168,7 @@ const Calendar = () => {
   };
 
   const getEventPosition = (event: Event, date: Date) => {
-    if (event.type === "long" && event.endDate) {
+    if (event.type === "long" && event.endDate != null) {
       const startDate = event.date;
       const endDate = event.endDate;
       const currentDate = date;
@@ -185,11 +185,11 @@ const Calendar = () => {
   };
 
   const getMultiDayEvents = () => {
-    return events.filter(event => event.type === "long" && event.endDate);
+    return events.filter(event => event.type === "long" && event.endDate != null);
   };
 
   const isPartOfMultiDayEvent = (date: Date, multiDayEvent: Event) => {
-    return date >= multiDayEvent.date && date <= multiDayEvent.endDate!;
+    return multiDayEvent.endDate != null && date >= multiDayEvent.date && date <= multiDayEvent.endDate;
   };
 
   const navigateMonth = (direction: "prev" | "next") => {
