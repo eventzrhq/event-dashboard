@@ -37,7 +37,12 @@ const FloatingActionButtons = () => {
       )}
 
       {/* SideDrawer - Always rendered for functionality */}
-      <SideDrawer open={isDrawerOpen} onOpenChange={() => {}}>
+      <SideDrawer open={isDrawerOpen} onOpenChange={(open) => {
+        // Only allow opening, never closing through SideDrawer's internal state
+        if (open && !isDrawerOpen) {
+          setIsDrawerOpen(true);
+        }
+      }}>
         {/* Chat Drawer */}
         <ChatDrawer />
       </SideDrawer>
