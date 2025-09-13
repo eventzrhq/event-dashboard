@@ -78,20 +78,18 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  if (!isOpen) return null;
+
   return (
     <>
       {/* Backdrop */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
-          onClick={onClose}
-        />
-      )}
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-50 z-[9998] transition-opacity duration-300"
+        onClick={onClose}
+      />
       
       {/* Drawer */}
-      <div className={`fixed top-0 right-0 h-full w-96 bg-white dark:bg-slate-900 shadow-xl transform transition-transform duration-300 ease-in-out z-50 ${
-        isOpen ? 'translate-x-0' : 'translate-x-full'
-      }`}>
+      <div className="fixed top-0 right-0 h-screen w-96 bg-white dark:bg-slate-900 shadow-xl transform transition-transform duration-300 ease-in-out z-[9999] border-l border-gray-200 dark:border-slate-700">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-slate-700">
           <div className="flex items-center space-x-3">
