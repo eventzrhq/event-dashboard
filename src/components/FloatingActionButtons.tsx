@@ -18,28 +18,29 @@ const FloatingActionButtons = () => {
     }`}>
       {/* Chat Button - Only shows when drawer is closed */}
       {!isDrawerOpen && (
-        <SideDrawer open={isDrawerOpen} onOpenChange={() => {}}>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  size="icon"
-                  onClick={() => setIsDrawerOpen(true)}
-                  className="w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
-                >
-                  <Icon name="message-circle" className="w-6 h-6 drop-shadow-sm" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="left">
-                <p>Chat with AI Assistant</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          
-          {/* Chat Drawer */}
-          <ChatDrawer />
-        </SideDrawer>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                onClick={() => setIsDrawerOpen(true)}
+                className="w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
+              >
+                <Icon name="message-circle" className="w-6 h-6 drop-shadow-sm" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="left">
+              <p>Chat with AI Assistant</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
+
+      {/* SideDrawer - Always rendered for functionality */}
+      <SideDrawer open={isDrawerOpen} onOpenChange={() => {}}>
+        {/* Chat Drawer */}
+        <ChatDrawer />
+      </SideDrawer>
 
       {/* Close Button - Only shows when drawer is open */}
       {isDrawerOpen && (
