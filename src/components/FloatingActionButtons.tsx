@@ -13,7 +13,7 @@ const FloatingActionButtons = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
-    <div className={`absolute bottom-20 flex flex-col space-y-3 z-50 transition-all duration-300 ${
+    <div className={`absolute bottom-20 flex flex-col space-y-3 z-[100] transition-all duration-300 ${
       isDrawerOpen ? 'right-[416px]' : 'right-6'
     }`}>
       {/* Chat Button */}
@@ -21,14 +21,14 @@ const FloatingActionButtons = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <SideDrawerTrigger asChild>
-                <Button 
-                  size="icon" 
-                  className="w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
-                >
-                  <Icon name="message-circle" className="w-6 h-6" />
-                </Button>
-              </SideDrawerTrigger>
+                     <SideDrawerTrigger asChild>
+                       <Button
+                         size="icon"
+                         className="w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
+                       >
+                         <Icon name="message-circle" className="w-6 h-6 drop-shadow-sm" />
+                       </Button>
+                     </SideDrawerTrigger>
             </TooltipTrigger>
             <TooltipContent side="left">
               <p>Chat with AI Assistant</p>
@@ -48,9 +48,9 @@ const FloatingActionButtons = () => {
               <Button 
                 size="icon" 
                 onClick={() => setIsDrawerOpen(false)}
-                className="w-14 h-14 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
+                className="w-14 h-14 bg-red-600 hover:bg-red-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
               >
-                <Icon name="chevron-left" className="w-6 h-6" />
+                <Icon name="chevron-left" className="w-6 h-6 drop-shadow-sm" />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="left">
@@ -67,7 +67,7 @@ const FloatingActionButtons = () => {
             <Button 
               size="icon" 
               onClick={() => router.push('/')}
-              className="w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 font-bold text-lg"
+              className="w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 font-bold text-lg z-50"
             >
               ZP
             </Button>
