@@ -1,15 +1,22 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "./icons";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import ChatDrawer from "./ChatDrawer";
 
 const FloatingActionButtons = () => {
   const router = useRouter();
+  const [isChatDrawerOpen, setIsChatDrawerOpen] = useState(false);
 
   const handleChatClick = () => {
-    router.push('/chat');
+    setIsChatDrawerOpen(true);
+  };
+
+  const handleCloseChatDrawer = () => {
+    setIsChatDrawerOpen(false);
   };
 
   return (
@@ -49,6 +56,9 @@ const FloatingActionButtons = () => {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
+
+      {/* Chat Drawer */}
+      <ChatDrawer isOpen={isChatDrawerOpen} onClose={handleCloseChatDrawer} />
     </div>
   );
 };
