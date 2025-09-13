@@ -174,55 +174,22 @@ const ChatDrawer: React.FC = () => {
         <div className="border-t border-gray-200 p-4 bg-white">
           <div className="flex items-end space-x-2">
             {/* Attachment and Voice buttons */}
-            <div className="flex space-x-1">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-8 h-8 p-0 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
-              >
-                <Icon name="edit" className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-8 h-8 p-0 rounded-full bg-gray-100 hover:bg-gray-200"
-              >
-                <Icon name="paperclip" className="w-4 h-4" />
-              </Button>
-            </div>
+           
 
-            {/* Message Input */}
-            <div className="flex-1">
+            {/* Message Input with Send Button */}
+            <div className="flex-1 relative">
               <Input
                 placeholder="Write your message"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="rounded-full border-gray-300 focus:border-blue-500"
+                className="rounded-full border-gray-300 focus:border-blue-500 pr-12"
               />
-            </div>
-
-            {/* Send and Voice buttons */}
-            <div className="flex space-x-1">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-8 h-8 p-0 rounded-full bg-gray-100 hover:bg-gray-200"
-              >
-                <Icon name="paperclip" className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-8 h-8 p-0 rounded-full bg-gray-100 hover:bg-gray-200"
-              >
-                <Icon name="mic" className="w-4 h-4" />
-              </Button>
               <Button
                 onClick={handleSendMessage}
                 variant="ghost"
                 size="sm"
-                className="w-8 h-8 p-0 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
+                className="absolute right-1 top-1/2 transform -translate-y-1/2 w-8 h-8 p-0 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
               >
                 <Icon name="send" className="w-4 h-4" />
               </Button>
