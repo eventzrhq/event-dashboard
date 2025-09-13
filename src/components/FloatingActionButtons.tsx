@@ -40,6 +40,26 @@ const FloatingActionButtons = () => {
         <ChatDrawer />
       </SideDrawer>
 
+      {/* Close Button - Only shows when drawer is open */}
+      {isDrawerOpen && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                size="icon" 
+                onClick={() => setIsDrawerOpen(false)}
+                className="w-14 h-14 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                <Icon name="chevron-left" className="w-6 h-6" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="left">
+              <p>Close Chat</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+
       {/* ZP Button */}
       <TooltipProvider>
         <Tooltip>
