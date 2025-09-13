@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { Icon } from "./icons";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
-import { SideDrawer } from "./ui/side-drawer";
 import ChatDrawer from "./ChatDrawer";
 
 const FloatingActionButtons = () => {
@@ -39,17 +38,24 @@ const FloatingActionButtons = () => {
         </TooltipProvider>
       )}
 
-      {/* SideDrawer - Always rendered for functionality */}
-      <SideDrawer 
-        open={isDrawerOpen} 
-        onOpenChange={() => {
-          // Completely ignore ALL onOpenChange calls from SideDrawer
-          // We handle all state changes manually through our buttons only
-        }}
-      >
-        {/* Chat Drawer */}
-        <ChatDrawer />
-      </SideDrawer>
+      {/* Custom Drawer - Always rendered for functionality */}
+      {isDrawerOpen && (
+        <>
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 z-50 bg-black/80"
+            onClick={() => {
+              console.log('Backdrop clicked - ignoring');
+              // Do nothing - only close button can close
+            }}
+          />
+          
+          {/* Drawer Content */}
+          <div className="fixed top-0 right-0 z-50 flex h-full w-[400px] flex-col border bg-background shadow-lg">
+            <ChatDrawer />
+          </div>
+        </>
+      )}
 
       {/* Close Button - Only shows when drawer is open */}
       {isDrawerOpen && (
