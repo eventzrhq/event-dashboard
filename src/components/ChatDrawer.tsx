@@ -1,10 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react";
 import { Icon } from "./icons";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import {
+  SideDrawer,
+  SideDrawerClose,
+  SideDrawerContent,
+  SideDrawerDescription,
+  SideDrawerHeader,
+  SideDrawerTitle,
+} from "./ui/side-drawer";
 
 interface Message {
   id: string;
@@ -14,18 +21,7 @@ interface Message {
   avatar?: string;
 }
 
-interface ChatDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
+const ChatDrawer: React.FC = () => {
 
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -86,20 +82,9 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!mounted || !isOpen) return null;
-
-  const drawerContent = (
-    <>
-      {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 z-[9998]"
-        onClick={onClose}
-      />
-      
-      {/* Drawer */}
-      <div className="fixed top-0 right-0 h-screen w-96 bg-white shadow-xl z-[9999] border-l border-gray-200">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
+  return (
+    <SideDrawerContent side="right" className="w-96 p-0">
+        <SideDrawerHeader className="flex flex-row items-center justify-between border-b border-gray-200 bg-gray-50 p-4">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
               <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
@@ -107,19 +92,20 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
               </div>
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">Zaphyr AI Assistant</h3>
-              <p className="text-sm text-green-600">Online</p>
+              <SideDrawerTitle className="text-gray-900">Zaphyr AI Assistant</SideDrawerTitle>
+              <SideDrawerDescription className="text-green-600">Online</SideDrawerDescription>
             </div>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onClose}
-            className="w-8 h-8 p-0 rounded-full hover:bg-gray-100"
-          >
-            <Icon name="chevron-left" className="w-4 h-4" />
-          </Button>
-        </div>
+          <SideDrawerClose asChild>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-8 h-8 p-0 rounded-full hover:bg-gray-100"
+            >
+              <Icon name="chevron-left" className="w-4 h-4" />
+            </Button>
+          </SideDrawerClose>
+        </SideDrawerHeader>
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4 h-[calc(100vh-140px)]">
@@ -270,11 +256,8 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </SideDrawerContent>
   );
-
-  return createPortal(drawerContent, document.body);
 };
 
 export default ChatDrawer;
