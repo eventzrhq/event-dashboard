@@ -86,24 +86,20 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!mounted) return null;
+  if (!mounted || !isOpen) return null;
 
   const drawerContent = (
     <>
       {/* Backdrop */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-[9998] transition-opacity duration-300"
-          onClick={onClose}
-        />
-      )}
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-50 z-[9998]"
+        onClick={onClose}
+      />
       
       {/* Drawer */}
-      <div className={`fixed top-0 right-0 h-screen w-96 bg-white dark:bg-slate-900 shadow-xl transform transition-transform duration-300 ease-in-out z-[9999] border-l border-gray-200 dark:border-slate-700 ${
-        isOpen ? 'translate-x-0' : 'translate-x-full'
-      }`}>
+      <div className="fixed top-0 right-0 h-screen w-96 bg-white shadow-xl z-[9999] border-l border-gray-200">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-slate-700">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
               <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
@@ -111,15 +107,15 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
               </div>
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">Zaphyr AI Assistant</h3>
-              <p className="text-sm text-green-600 dark:text-green-400">Online</p>
+              <h3 className="font-semibold text-gray-900">Zaphyr AI Assistant</h3>
+              <p className="text-sm text-green-600">Online</p>
             </div>
           </div>
           <Button
             variant="ghost"
             size="sm"
             onClick={onClose}
-            className="w-8 h-8 p-0 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700"
+            className="w-8 h-8 p-0 rounded-full hover:bg-gray-100"
           >
             <Icon name="chevron-left" className="w-4 h-4" />
           </Button>
@@ -151,12 +147,12 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
                     className={`px-4 py-2 rounded-2xl ${
                       message.sender === "user"
                         ? "bg-blue-500 text-white"
-                        : "bg-gray-100 dark:bg-slate-700 text-gray-900 dark:text-white"
+                        : "bg-gray-100 text-gray-900"
                     }`}
                   >
                     <p className="text-sm">{message.content}</p>
                   </div>
-                  <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  <span className="text-xs text-gray-500 mt-1">
                     {message.timestamp}
                   </span>
                 </div>
@@ -172,7 +168,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
                   <span className="text-sm">🤖</span>
                 </div>
               </div>
-              <div className="bg-gray-100 dark:bg-slate-700 rounded-2xl p-3">
+              <div className="bg-gray-100 rounded-2xl p-3">
                 <div className="grid grid-cols-2 gap-2">
                   {/* Template Previews */}
                   <div className="bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg p-2 text-white">
@@ -192,14 +188,14 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
                     <p className="text-xs opacity-90">Professional</p>
                   </div>
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">Event landing page templates</p>
+                <p className="text-xs text-gray-500 mt-2">Event landing page templates</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Message Input */}
-        <div className="border-t border-gray-200 dark:border-slate-700 p-4">
+        <div className="border-t border-gray-200 p-4 bg-white">
           <div className="flex items-end space-x-2">
             {/* Attachment and Voice buttons */}
             <div className="flex space-x-1">
@@ -213,7 +209,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="w-8 h-8 p-0 rounded-full bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600"
+                className="w-8 h-8 p-0 rounded-full bg-gray-100 hover:bg-gray-200"
               >
                 <Icon name="paperclip" className="w-4 h-4" />
               </Button>
@@ -226,7 +222,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="rounded-full border-gray-300 dark:border-slate-600 focus:border-blue-500 dark:focus:border-blue-400"
+                className="rounded-full border-gray-300 focus:border-blue-500"
               />
             </div>
 
@@ -235,14 +231,14 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="w-8 h-8 p-0 rounded-full bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600"
+                className="w-8 h-8 p-0 rounded-full bg-gray-100 hover:bg-gray-200"
               >
                 <Icon name="paperclip" className="w-4 h-4" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
-                className="w-8 h-8 p-0 rounded-full bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600"
+                className="w-8 h-8 p-0 rounded-full bg-gray-100 hover:bg-gray-200"
               >
                 <Icon name="mic" className="w-4 h-4" />
               </Button>
@@ -266,7 +262,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
             >
               <Icon name="mic" className="w-3 h-3" />
             </Button>
-            <span className="text-xs text-gray-500 dark:text-gray-400">IN</span>
+            <span className="text-xs text-gray-500">IN</span>
             <div className="flex space-x-1">
               <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
               <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
