@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "./icons";
 import { Button } from "./ui/button";
@@ -9,11 +10,14 @@ import ChatDrawer from "./ChatDrawer";
 
 const FloatingActionButtons = () => {
   const router = useRouter();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
-    <div className="absolute bottom-20 right-6 flex flex-col space-y-3 z-50">
+    <div className={`absolute bottom-20 flex flex-col space-y-3 z-50 transition-all duration-300 ${
+      isDrawerOpen ? 'right-[416px]' : 'right-6'
+    }`}>
       {/* Chat Button */}
-      <SideDrawer>
+      <SideDrawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
