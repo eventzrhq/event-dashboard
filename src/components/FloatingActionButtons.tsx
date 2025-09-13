@@ -23,7 +23,10 @@ const FloatingActionButtons = () => {
             <TooltipTrigger asChild>
               <Button
                 size="icon"
-                onClick={() => setIsDrawerOpen(true)}
+                onClick={() => {
+                  console.log('Chat button clicked, opening drawer');
+                  setIsDrawerOpen(true);
+                }}
                 className="w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
               >
                 <Icon name="message-circle" className="w-6 h-6 drop-shadow-sm" />
@@ -37,12 +40,17 @@ const FloatingActionButtons = () => {
       )}
 
       {/* SideDrawer - Always rendered for functionality */}
-      <SideDrawer open={isDrawerOpen} onOpenChange={(open) => {
-        // Only allow opening, never closing through SideDrawer's internal state
-        if (open && !isDrawerOpen) {
-          setIsDrawerOpen(true);
-        }
-      }}>
+      <SideDrawer 
+        open={isDrawerOpen} 
+        onOpenChange={(open) => {
+          console.log('SideDrawer onOpenChange called with:', open, 'current state:', isDrawerOpen);
+          // Completely ignore any closing attempts from SideDrawer
+          if (open) {
+            setIsDrawerOpen(true);
+          }
+          // Do nothing if open is false - never allow SideDrawer to close
+        }}
+      >
         {/* Chat Drawer */}
         <ChatDrawer />
       </SideDrawer>
@@ -54,7 +62,10 @@ const FloatingActionButtons = () => {
             <TooltipTrigger asChild>
               <Button 
                 size="icon" 
-                onClick={() => setIsDrawerOpen(false)}
+                onClick={() => {
+                  console.log('Close button clicked, closing drawer');
+                  setIsDrawerOpen(false);
+                }}
                 className="w-14 h-14 bg-red-600 hover:bg-red-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
               >
                 <Icon name="chevron-left" className="w-6 h-6 drop-shadow-sm" />
