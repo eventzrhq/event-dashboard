@@ -52,11 +52,6 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
       icon: "dashboard",
     },
     {
-      id: "chat",
-      label: "Chat",
-      icon: "message-circle",
-    },
-    {
       id: "timeline",
       label: "Timeline",
       icon: "timeline",
