@@ -4,14 +4,6 @@ import { useState } from "react";
 import { Icon } from "./icons";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import {
-  SideDrawer,
-  SideDrawerClose,
-  SideDrawerContent,
-  SideDrawerDescription,
-  SideDrawerHeader,
-  SideDrawerTitle,
-} from "./ui/side-drawer";
 
 interface Message {
   id: string;
@@ -83,8 +75,8 @@ const ChatDrawer: React.FC = () => {
   };
 
   return (
-    <SideDrawerContent side="right" className="w-96 p-0">
-        <SideDrawerHeader className="flex flex-row items-center justify-between border-b border-gray-200 bg-gray-50 p-4">
+    <div className="w-96 p-0 h-full flex flex-col">
+        <div className="flex flex-row items-center justify-between border-b border-gray-200 bg-gray-50 p-4">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
               <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
@@ -92,20 +84,18 @@ const ChatDrawer: React.FC = () => {
               </div>
             </div>
             <div>
-              <SideDrawerTitle className="text-gray-900">Zaphyr AI Assistant</SideDrawerTitle>
-              <SideDrawerDescription className="text-green-600">Online</SideDrawerDescription>
+              <h2 className="text-lg font-semibold leading-none tracking-tight text-gray-900">Zaphyr AI Assistant</h2>
+              <p className="text-sm text-green-600">Online</p>
             </div>
           </div>
-          <SideDrawerClose asChild>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="w-8 h-8 p-0 rounded-full hover:bg-gray-100"
-            >
-              <Icon name="chevron-left" className="w-4 h-4" />
-            </Button>
-          </SideDrawerClose>
-        </SideDrawerHeader>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-8 h-8 p-0 rounded-full hover:bg-gray-100"
+          >
+            <Icon name="chevron-left" className="w-4 h-4" />
+          </Button>
+        </div>
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4 h-[calc(100vh-140px)]">
@@ -256,7 +246,7 @@ const ChatDrawer: React.FC = () => {
             </div>
           </div>
         </div>
-      </SideDrawerContent>
+      </div>
   );
 };
 
