@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Icon } from "./icons";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -19,6 +20,13 @@ interface ChatDrawerProps {
 }
 
 const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -78,18 +86,22 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!isOpen) return null;
+  if (!mounted) return null;
 
-  return (
+  const drawerContent = (
     <>
       {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 z-[9998] transition-opacity duration-300"
-        onClick={onClose}
-      />
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-[9998] transition-opacity duration-300"
+          onClick={onClose}
+        />
+      )}
       
       {/* Drawer */}
-      <div className="fixed top-0 right-0 h-screen w-96 bg-white dark:bg-slate-900 shadow-xl transform transition-transform duration-300 ease-in-out z-[9999] border-l border-gray-200 dark:border-slate-700">
+      <div className={`fixed top-0 right-0 h-screen w-96 bg-white dark:bg-slate-900 shadow-xl transform transition-transform duration-300 ease-in-out z-[9999] border-l border-gray-200 dark:border-slate-700 ${
+        isOpen ? 'translate-x-0' : 'translate-x-full'
+      }`}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-slate-700">
           <div className="flex items-center space-x-3">
@@ -265,6 +277,8 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose }) => {
       </div>
     </>
   );
+
+  return createPortal(drawerContent, document.body);
 };
 
 export default ChatDrawer;
