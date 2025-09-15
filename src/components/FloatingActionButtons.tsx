@@ -33,6 +33,28 @@ const FloatingActionButtons = () => {
         </>
       )}
 
+      {/* Chat Button - Always visible for other purposes */}
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="icon"
+              onClick={() => {
+                console.log('Chat button clicked - other purpose');
+                // Add your custom functionality here
+                // For example: router.push('/chat'), open notifications, etc.
+              }}
+              className="w-10 h-10 bg-[#F7F7F7] hover:bg-green-700 text-black rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
+            >
+              <Icon name="message-circle" className="w-6 h-6 drop-shadow-sm" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="left">
+            <p>Chat & Messages</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       {/* Close Button - Only shows when drawer is open */}
       {isDrawerOpen && (
         <TooltipProvider>
@@ -78,28 +100,6 @@ const FloatingActionButtons = () => {
           </Tooltip>
         </TooltipProvider>
       )}
-
-      {/* Chat Button - Always visible for other purposes */}
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              size="icon"
-              onClick={() => {
-                console.log('Chat button clicked - other purpose');
-                // Add your custom functionality here
-                // For example: router.push('/chat'), open notifications, etc.
-              }}
-              className="w-10 h-10 bg-[#F7F7F7] hover:bg-green-700 text-black rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
-            >
-              <Icon name="message-circle" className="w-6 h-6 drop-shadow-sm" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="left">
-            <p>Chat & Messages</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
 
       {/* ZP Button - Only shows when drawer is closed */}
       {!isDrawerOpen && (
