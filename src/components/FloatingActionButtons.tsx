@@ -10,9 +10,12 @@ const FloatingActionButtons = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
-    <div className={`absolute bottom-20 flex flex-col p-1 bg-white rounded-full space-y-3 z-[100] transition-all duration-300 ${
-      isDrawerOpen ? 'right-[416px]' : 'right-6'
-    }`}>
+    <div 
+      className={`absolute bottom-20 flex flex-col p-1 rounded-full space-y-3 z-[100] transition-all duration-300 shadow-lg border border-gray-200 ${
+        isDrawerOpen ? 'right-[416px]' : 'right-6'
+      }`}
+      style={{ backgroundColor: '#ffffff' }}
+    >
 
       {/* Custom Drawer - Always rendered for functionality */}
       {isDrawerOpen && (
@@ -66,7 +69,7 @@ const FloatingActionButtons = () => {
                   console.log('Close button clicked, closing drawer');
                   setIsDrawerOpen(false);
                 }}
-                className="w-14 h-14 bg-red-600 hover:bg-red-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
+                className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
               >
                 <svg 
                   width="14" 
