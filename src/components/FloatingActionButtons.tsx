@@ -10,7 +10,7 @@ const FloatingActionButtons = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
-    <div className={`absolute bottom-20 flex flex-col space-y-3 z-[100] transition-all duration-300 ${
+    <div className={`absolute bottom-20 flex flex-col p-1 bg-red-500 rounded-full space-y-3 z-[100] transition-all duration-300 ${
       isDrawerOpen ? 'right-[416px]' : 'right-6'
     }`}>
 
@@ -67,7 +67,7 @@ const FloatingActionButtons = () => {
                 // Add your custom functionality here
                 // For example: router.push('/chat'), open notifications, etc.
               }}
-              className="w-14 h-14 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
+              className="w-14 h-14 bg-[#F7F7F7] hover:bg-green-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
             >
               <Icon name="message-circle" className="w-6 h-6 drop-shadow-sm" />
             </Button>
