@@ -306,15 +306,18 @@ export const Icon = ({ name, className }: IconProps) => {
       return (
         <svg
           className={className}
+          width="16"
+          height="18"
+          viewBox="0 0 16 18"
           fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <path
+            d="M9.56656 5.97905L4.9949 10.5507C4.30656 11.239 4.30656 12.3557 4.9949 13.044V13.044C5.68323 13.7324 6.7999 13.7324 7.48823 13.044L13.5149 7.01738C14.7774 5.75488 14.7774 3.70822 13.5149 2.44572V2.44572C12.2524 1.18322 10.2057 1.18322 8.94323 2.44572L2.91656 8.47238C1.0799 10.309 1.0799 13.2857 2.91656 15.1224V15.1224C4.75323 16.959 7.7299 16.959 9.56656 15.1224L13.2241 11.4649"
+            stroke="currentColor"
+            strokeWidth="1.25"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
           />
         </svg>
       );

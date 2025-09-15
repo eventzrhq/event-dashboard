@@ -69,7 +69,7 @@ const FloatingActionButtons = () => {
                   console.log('Close button clicked, closing drawer');
                   setIsDrawerOpen(false);
                 }}
-                className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
+                className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
               >
                 <svg 
                   width="14" 
