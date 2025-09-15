@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Icon } from "./icons";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import ChatDrawer from "./ChatDrawer";
 
 const FloatingActionButtons = () => {
-  const router = useRouter();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
@@ -58,6 +56,28 @@ const FloatingActionButtons = () => {
         </TooltipProvider>
       )}
 
+      {/* Chat Button - Always visible for other purposes */}
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="icon"
+              onClick={() => {
+                console.log('Chat button clicked - other purpose');
+                // Add your custom functionality here
+                // For example: router.push('/chat'), open notifications, etc.
+              }}
+              className="w-14 h-14 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
+            >
+              <Icon name="message-circle" className="w-6 h-6 drop-shadow-sm" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="left">
+            <p>Chat & Messages</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       {/* ZP Button - Only shows when drawer is closed */}
       {!isDrawerOpen && (
         <TooltipProvider>
@@ -75,7 +95,7 @@ const FloatingActionButtons = () => {
               </Button>
             </TooltipTrigger>
             <TooltipContent side="left">
-              <p>Chat with AI Assistant</p>
+              <p>AI Assistant</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
