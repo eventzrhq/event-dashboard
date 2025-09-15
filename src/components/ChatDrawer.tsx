@@ -79,7 +79,7 @@ const ChatDrawer: React.FC = () => {
 
   return (
     <div className="w-96 p-0 h-full flex flex-col">
-      <div className="flex flex-row items-center justify-between border-b border-gray-200 bg-gray-50 p-4">
+      <div className="flex flex-row items-center justify-between  p-4">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
             <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
@@ -93,13 +93,7 @@ const ChatDrawer: React.FC = () => {
             <p className="text-sm text-green-600">Online</p>
           </div>
         </div>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="w-8 h-8 p-0 rounded-full hover:bg-gray-100"
-        >
-          <Icon name="chevron-left" className="w-4 h-4" />
-        </Button>
+      
       </div>
 
       {/* Messages */}
@@ -114,7 +108,7 @@ const ChatDrawer: React.FC = () => {
             <div
               className={`flex max-w-xs ${
                 message.sender === "user" ? "flex-row-reverse" : "flex-row"
-              } space-x-2`}
+              } gap-x-2`}
             >
               {/* Avatar */}
               <div className="flex-shrink-0">
@@ -215,8 +209,8 @@ const ChatDrawer: React.FC = () => {
               <Icon name="send" className="w-4 h-4" />
             </Button>
           </div>
-          <div className="size-10 rounded-full bg-[#F7F7F7]"></div>
-          <div className="size-10 rounded-full bg-[#F7F7F7]"></div>
+          <div className="size-10 rounded-full bg-[#F7F7F7] flex items-center justify-center"><Icon name="paperclip" className="w-4 h-4" /></div>
+          <div className="size-10 rounded-full bg-[#F7F7F7] flex items-center justify-center"><Icon name="mic" className="w-4 h-4" /></div>
         </div>
 
         {/* Quick Access Icons */}
