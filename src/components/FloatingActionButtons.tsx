@@ -11,8 +11,8 @@ const FloatingActionButtons = () => {
 
   return (
     <div 
-      className={`absolute bottom-20 flex flex-col p-1 rounded-full space-y-3 z-[100] transition-all duration-300 shadow-lg border border-gray-200 ${
-        isDrawerOpen ? 'right-[416px]' : 'right-6'
+      className={`absolute bottom-4 sm:bottom-6 lg:bottom-20 flex flex-col p-1 rounded-full space-y-2 sm:space-y-3 z-[100] transition-all duration-300 ease-out shadow-lg border border-gray-200 ${
+        isDrawerOpen ? 'right-2 sm:right-4 lg:right-[416px]' : 'right-2 sm:right-4 lg:right-6'
       }`}
       style={{ backgroundColor: '#ffffff' }}
     >
@@ -21,8 +21,8 @@ const FloatingActionButtons = () => {
       {isDrawerOpen && (
         <>
           {/* Backdrop */}
-          <div 
-            className="fixed inset-0 z-50 bg-black/80"
+          <div
+            className="fixed inset-0 z-50 bg-black/80 animate-in fade-in duration-200"
             onClick={() => {
               console.log('Backdrop clicked - ignoring');
               // Do nothing - only close button can close
@@ -30,7 +30,7 @@ const FloatingActionButtons = () => {
           />
           
           {/* Drawer Content */}
-          <div className="fixed top-0 right-0 z-50 flex h-full w-[400px] flex-col border bg-background shadow-lg">
+          <div className="fixed top-0 right-0 z-50 flex h-full w-full sm:w-80 md:w-96 lg:w-[400px] flex-col border bg-background shadow-lg animate-in slide-in-from-right duration-300 ease-out">
             <ChatDrawer />
           </div>
         </>
@@ -47,9 +47,9 @@ const FloatingActionButtons = () => {
                 // Add your custom functionality here
                 // For example: router.push('/chat'), open notifications, etc.
               }}
-              className="w-10 h-10 bg-[#F7F7F7] hover:bg-green-700 text-black rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
+              className="w-8 h-8 sm:w-10 sm:h-10 bg-[#F7F7F7] hover:bg-green-700 active:scale-95 text-black rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50 touch-manipulation"
             >
-              <Icon name="message-circle" className="w-6 h-6 drop-shadow-sm" />
+              <Icon name="message-circle" className="w-4 h-4 sm:w-6 sm:h-6 drop-shadow-sm" />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="left">
@@ -69,7 +69,7 @@ const FloatingActionButtons = () => {
                   console.log('Close button clicked, closing drawer');
                   setIsDrawerOpen(false);
                 }}
-                className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50"
+                className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 z-50 touch-manipulation"
               >
                 <svg 
                   width="14" 
@@ -77,7 +77,7 @@ const FloatingActionButtons = () => {
                   viewBox="0 0 14 14" 
                   fill="none" 
                   xmlns="http://www.w3.org/2000/svg"
-                  className="drop-shadow-sm"
+                  className="drop-shadow-sm w-3 h-3 sm:w-4 sm:h-4"
                 >
                   <path 
                     opacity="0.4" 
@@ -115,7 +115,7 @@ const FloatingActionButtons = () => {
                   console.log('ZP button clicked, opening drawer');
                   setIsDrawerOpen(true);
                 }}
-                className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 font-bold text-lg z-50"
+                className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white rounded-full shadow-2xl hover:shadow-3xl border-2 border-white/20 backdrop-blur-sm transition-all duration-200 font-bold text-sm sm:text-lg z-50 touch-manipulation"
               >
                 ZP
               </Button>

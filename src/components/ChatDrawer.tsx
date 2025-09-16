@@ -78,7 +78,7 @@ const ChatDrawer: React.FC = () => {
   };
 
   return (
-    <div className="w-96 p-0 h-full flex flex-col">
+    <div className="w-full sm:w-80 md:w-96 p-0 h-full flex flex-col">
       <div className="flex flex-row items-center justify-between  p-4">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">

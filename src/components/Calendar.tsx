@@ -211,19 +211,19 @@ const Calendar = () => {
   const days = getDaysInMonth(currentDate);
 
   return (
-    <div className="w-full bg-gray-50 dark:bg-slate-900/50 p-4 h-full sm:p-6 overflow-y-auto scrollbar-hide flex-1">
+    <div className="w-full bg-gray-50 dark:bg-slate-900/50 p-2 sm:p-4 lg:p-6 h-full overflow-y-auto scrollbar-hide flex-1 overscroll-contain">
       <div className="w-full max-w-none h-full flex flex-col">
         {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <div className="mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
               Calendar
             </h1>
-            <div className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               Dashboard / Calendar
             </div>
           </div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4">
             <div>
               <div className="flex items-center space-x-4 mt-2">
                 <div className="flex items-center space-x-2">
@@ -299,7 +299,7 @@ const Calendar = () => {
             {dayNames.map((day) => (
               <div
                 key={day}
-                className="p-2 sm:p-4 text-center text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-slate-700/50"
+                className="p-1 sm:p-2 lg:p-4 text-center text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-slate-700/50"
               >
                 {day}
               </div>

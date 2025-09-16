@@ -378,7 +378,7 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
             {!isCollapsed && (
                 <button
                   onClick={() => setIsCollapsed(!isCollapsed)}
-                  className="bg-blue-500 hover:bg-blue-600 absolute right-0 top-1/2 transform -translate-y-1/2 py-[14px] pl-0.5 text-white rounded-tl rounded-bl  transition-colors flex items-center justify-center"
+                  className="hidden lg:flex bg-blue-500 hover:bg-blue-600 absolute right-0 top-1/2 transform -translate-y-1/2 py-[14px] pl-0.5 text-white rounded-tl rounded-bl transition-colors items-center justify-center"
                 >
                 <Icon name="chevron-left" className="w-4 h-4" />
               </button>
@@ -387,7 +387,7 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
         </div>
 
       {/* Navigation */}
-        <div className="flex-1 overflow-y-auto scrollbar-hide">
+        <div className="flex-1 overflow-y-auto scrollbar-hide overscroll-contain">
         {/* Main Menu */}
           {renderMenuSection("Main Menu", mainMenuItems)}
           {/* <div className="mb-6">
@@ -756,9 +756,9 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
       </div>
       </div>
 
-      {/* Collapse Button - Outside when collapsed */}
+      {/* Collapse Button - Outside when collapsed (hidden on mobile) */}
       {isCollapsed && (
-        <div className="absolute top-6 -right-4 z-10">
+        <div className="absolute top-6 -right-4 z-10 hidden lg:block">
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="bg-blue-500 hover:bg-blue-600 text-white rounded-tr rounded-br py-[14px] pr-0.5 transition-colors flex items-center justify-center shadow-lg"
