@@ -71,7 +71,7 @@ const CRM = () => {
       email: "alda.ziemer@supportpro.com",
       address: "456 Support Ave, Austin, TX, 73301",
       department: "Support",
-      isStarred: false,
+      isStarred: true,
       category: "support",
       status: "lead",
       notes: "New lead from trade show. Very interested in our services.",
@@ -116,7 +116,7 @@ const CRM = () => {
       email: "juan.granado@successco.com",
       address: "654 Success St, Miami, FL, 33101",
       department: "Support",
-      isStarred: false,
+      isStarred: true,
       category: "support",
       status: "customer",
       notes: "Happy customer. Potential for upselling additional services.",
@@ -159,7 +159,16 @@ const CRM = () => {
     let filtered = contacts;
 
     // Apply category filter
-    if (activeFilter !== "all") {
+    if (activeFilter === "starred") {
+      filtered = filtered.filter(contact => contact.isStarred);
+    } else if (activeFilter === "frequent") {
+      // For frequent, we could implement logic based on last contact date or interaction frequency
+      // For now, let's show contacts with recent lastContact dates
+      filtered = filtered.filter(contact => 
+        contact.lastContact && 
+        new Date(contact.lastContact) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) // Last 30 days
+      );
+    } else if (activeFilter !== "all") {
       filtered = filtered.filter(contact => contact.category === activeFilter);
     }
 
