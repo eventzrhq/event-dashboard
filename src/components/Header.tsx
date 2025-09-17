@@ -4,22 +4,19 @@ import { useState } from "react";
 import { Icon } from "./icons";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
-import { Badge } from "./ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import AppsDropdown from "./AppsDropdown";
-import NotificationsDialog from "./NotificationsDialog";
-import SettingsPanel from "./SettingsPanel";
+import NotificationsDropdown from "./NotificationsDropdown";
+import UserProfileDropdown from "./UserProfileDropdown";
 
 interface HeaderProps {
   onMobileMenuToggle?: () => void;
   onNavigate?: (page: string) => void;
+  onSettingsToggle?: () => void;
 }
 
-const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
+const Header = ({ onMobileMenuToggle, onNavigate, onSettingsToggle }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
 
   return (
     <div className="bg-white dark:bg-slate-800/50 border-b border-gray-200 dark:border-slate-700/50 backdrop-blur-sm">
@@ -122,30 +119,7 @@ const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    className="relative"
-                    onClick={() => setShowNotifications(true)}
-                  >
-                    <Icon
-                      name="bell-custom"
-                      className="w-5 h-5 text-gray-600 dark:text-gray-300"
-                    />
-                    {/* Notification Badge */}
-                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-medium rounded-full flex items-center justify-center">
-                      5
-                    </span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Notifications</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <NotificationsDropdown />
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -200,30 +174,7 @@ const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
 
           {/* Mobile Action Buttons */}
           <div className="flex md:hidden">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    className="relative"
-                    onClick={() => setShowNotifications(true)}
-                  >
-                    <Icon
-                      name="bell-custom"
-                      className="w-5 h-5 text-gray-600 dark:text-gray-300"
-                    />
-                    {/* Notification Badge */}
-                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-medium rounded-full flex items-center justify-center">
-                      5
-                    </span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Notifications</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <NotificationsDropdown />
           </div>
 
           {/* Settings Button */}
@@ -233,7 +184,10 @@ const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  onClick={() => setShowSettings(true)}
+                  onClick={() => {
+                    console.log("Settings button clicked!");
+                    onSettingsToggle?.();
+                  }}
                   className=""
                 >
                   <Icon
@@ -249,54 +203,10 @@ const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
           </TooltipProvider>
 
           {/* User Profile */}
-          <div className="flex items-center bg-[#FAFAFA] space-x-1 sm:space-x-2 pl-1 sm:pl-2 p-1 sm:p-2 rounded-full">
-            <div className="relative">
-              <Avatar className="w-6 h-6 sm:w-8 sm:h-8">
-                <AvatarImage
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
-                  alt="Profile"
-                />
-                <AvatarFallback>P</AvatarFallback>
-              </Avatar>
-              <Badge className="absolute -top-1 -right-1 size-2 sm:size-3 p-0 bg-white border-0">
-                <Icon name="check-custom" className="size-2 sm:size-3 text-white" />
-              </Badge>
-              <div className="absolute bottom-[1px] left-[2px] sm:left-[3px] rounded-full bg-green-400 size-1 sm:size-1.5 flex items-center justify-center animate-pulse">
-                <div className="absolute rounded-full bg-green-400 size-1 sm:size-1.5 animate-ping"></div>
-              </div>
-            </div>
-            <span className="hidden sm:block text-sm font-medium text-gray-900 dark:text-white">
-              Praveen
-            </span>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="p-1">
-                    <Icon
-                      name="chevron-down"
-                      className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600 dark:text-gray-300"
-                    />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>User Menu</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
+          <UserProfileDropdown onNavigate={onNavigate} />
         </div>
       </div>
       
-      {/* Notifications Dialog */}
-      <NotificationsDialog 
-        isOpen={showNotifications} 
-        onClose={() => setShowNotifications(false)} 
-      />
-      
-      {/* Settings Dialog */}
-      {showSettings && (
-        <SettingsPanel onClose={() => setShowSettings(false)} />
-      )}
     </div>
   );
 };

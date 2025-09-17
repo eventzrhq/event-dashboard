@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Footer from "./Footer";
 import FloatingActionButtons from "./FloatingActionButtons";
+import SettingsPanel from "./SettingsPanel";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ interface LayoutProps {
 
 const Layout = ({ children, currentPage = "dashboard", onNavigate }: LayoutProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-slate-900 dark:dark-mode-gradient">
@@ -50,6 +52,7 @@ const Layout = ({ children, currentPage = "dashboard", onNavigate }: LayoutProps
           <Header 
             onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
             onNavigate={onNavigate}
+            onSettingsToggle={() => setShowSettings(true)}
           />
         
         {/* Dynamic Content */}
@@ -63,6 +66,18 @@ const Layout = ({ children, currentPage = "dashboard", onNavigate }: LayoutProps
         {/* Floating Action Buttons */}
         <FloatingActionButtons />
       </div>
+      
+      {/* Settings Dialog - Rendered at root level */}
+      {showSettings && (
+        <SettingsPanel onClose={() => setShowSettings(false)} />
+      )}
+      
+      {/* Debug indicator */}
+      {showSettings && (
+        <div className="fixed top-4 left-4 bg-red-500 text-white p-2 rounded" style={{ zIndex: 100000 }}>
+          Settings State: OPEN (from Layout)
+        </div>
+      )}
     </div>
   );
 };
