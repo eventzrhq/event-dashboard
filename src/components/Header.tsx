@@ -9,6 +9,7 @@ import { Badge } from "./ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import AppsDropdown from "./AppsDropdown";
 import NotificationsDialog from "./NotificationsDialog";
+import SettingsPanel from "./SettingsPanel";
 
 interface HeaderProps {
   onMobileMenuToggle?: () => void;
@@ -18,6 +19,7 @@ interface HeaderProps {
 const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   return (
     <div className="bg-white dark:bg-slate-800/50 border-b border-gray-200 dark:border-slate-700/50 backdrop-blur-sm">
@@ -231,7 +233,7 @@ const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  onClick={() => onNavigate?.("settings")}
+                  onClick={() => setShowSettings(true)}
                   className=""
                 >
                   <Icon
@@ -290,6 +292,11 @@ const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
         isOpen={showNotifications} 
         onClose={() => setShowNotifications(false)} 
       />
+      
+      {/* Settings Dialog */}
+      {showSettings && (
+        <SettingsPanel onClose={() => setShowSettings(false)} />
+      )}
     </div>
   );
 };

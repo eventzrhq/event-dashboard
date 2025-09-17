@@ -8,7 +8,6 @@ import SupportTickets from "@/components/SupportTickets";
 import CRM from "@/components/CRM";
 import Dashboard from "@/components/Dashboard";
 import ChatApp from "@/components/ChatApp";
-import SettingsPanel from "@/components/SettingsPanel";
 import UserProfile from "@/components/UserProfile";
 
 export default function Home() {
@@ -24,8 +23,6 @@ export default function Home() {
         return <CRM />;
       case "chat":
         return <ChatApp />;
-      case "settings":
-        return <SettingsPanel />;
       case "timeline":
         return <UserProfile />;
       case "dashboard":

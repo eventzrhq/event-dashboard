@@ -2,9 +2,14 @@
 
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { Icon } from "./icons";
 import { cn } from "@/lib/utils";
 
-const SettingsPanel = () => {
+interface SettingsPanelProps {
+  onClose?: () => void;
+}
+
+const SettingsPanel = ({ onClose }: SettingsPanelProps = {}) => {
   const [theme, setTheme] = useState("light");
   const [direction, setDirection] = useState("ltr");
   const [themeColor, setThemeColor] = useState("BLUE_THEME");
@@ -24,20 +29,38 @@ const SettingsPanel = () => {
   ];
 
   return (
-    <div className="h-full overflow-y-auto bg-gray-50 dark:bg-slate-900 p-4 sm:p-6">
-      <div className="max-w-4xl mx-auto">
+    <div className="fixed inset-0 z-[60] overflow-hidden">
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity"
+        onClick={onClose}
+      />
+      
+      {/* Settings Panel */}
+      <div className="fixed inset-y-0 right-0 w-full max-w-2xl bg-white dark:bg-slate-800 shadow-2xl overflow-y-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Settings
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Customize your dashboard appearance and preferences
-          </p>
+        <div className="sticky top-0 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 p-6 z-10">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                Settings
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400">
+                Customize your dashboard appearance and preferences
+              </p>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-full transition-colors"
+            >
+              <Icon name="x" className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+            </button>
+          </div>
         </div>
 
         {/* Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Theme Option */}
           <div className="bg-white dark:bg-slate-800 rounded-lg p-6 border border-gray-200 dark:border-slate-700">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Theme Option</h3>
@@ -262,23 +285,24 @@ const SettingsPanel = () => {
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="mt-8 flex justify-end space-x-4">
-          <Button
-            variant="outline"
-            className="px-6"
-          >
-            Reset to Default
-          </Button>
-          <Button
-            onClick={() => {
-              // Apply settings logic would go here
-              console.log("Settings applied:", { theme, direction, themeColor, layout, container, sidebar, cardStyle, borderRadius });
-            }}
-            className="bg-blue-600 hover:bg-blue-700 px-6"
-          >
-            Apply Settings
-          </Button>
+          {/* Action Buttons */}
+          <div className="lg:col-span-2 mt-8 flex justify-end space-x-4">
+            <Button
+              variant="outline"
+              className="px-6"
+            >
+              Reset to Default
+            </Button>
+            <Button
+              onClick={() => {
+                // Apply settings logic would go here
+                console.log("Settings applied:", { theme, direction, themeColor, layout, container, sidebar, cardStyle, borderRadius });
+              }}
+              className="bg-blue-600 hover:bg-blue-700 px-6"
+            >
+              Apply Settings
+            </Button>
+          </div>
         </div>
       </div>
     </div>
