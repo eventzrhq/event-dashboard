@@ -7,6 +7,9 @@ import { Icon } from "./icons";
 import { cn } from "@/lib/utils";
 import { CreateTicketData } from "./CreateTicketForm";
 
+// Re-export the type for easier importing
+export type { CreateTicketData };
+
 interface CreateTicketDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -68,7 +71,7 @@ const CreateTicketDialog = ({ isOpen, onClose, onSubmit, isLoading = false }: Cr
     }
   };
 
-  const handleInputChange = (field: keyof CreateTicketData, value: any) => {
+  const handleInputChange = (field: keyof CreateTicketData, value: string | CreateTicketData["category"] | CreateTicketData["priority"]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {

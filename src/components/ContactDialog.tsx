@@ -126,7 +126,7 @@ const ContactDialog = ({ isOpen, onClose, onSubmit, contact, isLoading = false }
     }
   };
 
-  const handleInputChange = (field: keyof Contact, value: any) => {
+  const handleInputChange = (field: keyof Contact, value: string | boolean | Contact["category"] | Contact["status"]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {

@@ -28,7 +28,7 @@ const SupportTicketDetail = ({
   onStatusChange, 
   onPriorityChange, 
   onAddComment, 
-  onAssignTicket 
+  onAssignTicket: _onAssignTicket 
 }: SupportTicketDetailProps) => {
   const [newComment, setNewComment] = useState("");
   const [showInternalComment, setShowInternalComment] = useState(false);

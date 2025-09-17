@@ -74,7 +74,7 @@ const CreateTicketForm = ({ onSubmit, onCancel, isLoading = false }: CreateTicke
     }
   };
 
-  const handleInputChange = (field: keyof CreateTicketData, value: any) => {
+  const handleInputChange = (field: keyof CreateTicketData, value: string | CreateTicketData["category"] | CreateTicketData["priority"]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
@@ -128,7 +128,7 @@ const CreateTicketForm = ({ onSubmit, onCancel, isLoading = false }: CreateTicke
           Create Support Ticket
         </h2>
         <p className="text-gray-600 dark:text-gray-400">
-          Describe your issue and we'll help you resolve it as quickly as possible.
+          Describe your issue and we&apos;ll help you resolve it as quickly as possible.
         </p>
       </div>
 

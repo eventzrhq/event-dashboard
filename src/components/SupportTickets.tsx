@@ -1,12 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { SupportTicket, TicketFilters } from "./SupportTicketList";
+import { SupportTicket } from "./SupportTicketList";
 import CreateTicketDialog, { CreateTicketData } from "./CreateTicketDialog";
 import EditTicketDialog from "./EditTicketDialog";
 import TicketStatsCards from "./TicketStatsCards";
 import TicketTable from "./TicketTable";
-import { Icon } from "./icons";
 
 const SupportTickets = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);

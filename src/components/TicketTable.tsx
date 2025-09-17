@@ -71,6 +71,11 @@ const TicketTable = ({ tickets, onCreateNew, onEditTicket, onDeleteTicket }: Tic
     const aValue = a[sortField];
     const bValue = b[sortField];
     
+    // Handle undefined values
+    if (aValue === undefined && bValue === undefined) return 0;
+    if (aValue === undefined) return sortDirection === "asc" ? 1 : -1;
+    if (bValue === undefined) return sortDirection === "asc" ? -1 : 1;
+    
     if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
     if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
     return 0;

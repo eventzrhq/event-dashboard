@@ -86,7 +86,7 @@ const EditTicketDialog = ({ isOpen, onClose, onSubmit, ticket, isLoading = false
     }
   };
 
-  const handleInputChange = (field: keyof SupportTicket, value: any) => {
+  const handleInputChange = (field: keyof SupportTicket, value: string | SupportTicket["category"] | SupportTicket["priority"] | SupportTicket["status"]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
