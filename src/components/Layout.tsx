@@ -47,7 +47,10 @@ const Layout = ({ children, currentPage = "dashboard", onNavigate }: LayoutProps
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden relative w-full lg:w-auto">
         {/* Header */}
-        <Header onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
+          <Header 
+            onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+            onNavigate={onNavigate}
+          />
         
         {/* Dynamic Content */}
         <div className="flex-1 overflow-hidden relative">

@@ -6,6 +6,10 @@ import MainContent from "@/components/MainContent";
 import Calendar from "@/components/Calendar";
 import SupportTickets from "@/components/SupportTickets";
 import CRM from "@/components/CRM";
+import Dashboard from "@/components/Dashboard";
+import ChatApp from "@/components/ChatApp";
+import SettingsPanel from "@/components/SettingsPanel";
+import UserProfile from "@/components/UserProfile";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState("dashboard");
@@ -18,7 +22,15 @@ export default function Home() {
         return <SupportTickets />;
       case "crm":
         return <CRM />;
+      case "chat":
+        return <ChatApp />;
+      case "settings":
+        return <SettingsPanel />;
+      case "timeline":
+        return <UserProfile />;
       case "dashboard":
+        return <Dashboard />;
+      case "main":
       default:
         return <MainContent />;
     }

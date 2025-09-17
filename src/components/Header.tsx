@@ -11,9 +11,10 @@ import AppsDropdown from "./AppsDropdown";
 
 interface HeaderProps {
   onMobileMenuToggle?: () => void;
+  onNavigate?: (page: string) => void;
 }
 
-const Header = ({ onMobileMenuToggle }: HeaderProps) => {
+const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
@@ -135,7 +136,12 @@ const Header = ({ onMobileMenuToggle }: HeaderProps) => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="">
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className=""
+                    onClick={() => onNavigate?.("chat")}
+                  >
                     <Icon
                       name="box"
                       className="w-5 h-5 text-gray-600 dark:text-gray-300"
@@ -143,7 +149,7 @@ const Header = ({ onMobileMenuToggle }: HeaderProps) => {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Box</p>
+                  <p>Chat</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -198,6 +204,28 @@ const Header = ({ onMobileMenuToggle }: HeaderProps) => {
             </TooltipProvider>
           </div>
 
+          {/* Settings Button */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => onNavigate?.("settings")}
+                  className=""
+                >
+                  <Icon
+                    name="settings"
+                    className="w-5 h-5 text-gray-600 dark:text-gray-300"
+                  />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Settings</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
           {/* User Profile */}
           <div className="flex items-center bg-[#FAFAFA] space-x-1 sm:space-x-2 pl-1 sm:pl-2 p-1 sm:p-2 rounded-full">
             <div className="relative">
@@ -236,6 +264,7 @@ const Header = ({ onMobileMenuToggle }: HeaderProps) => {
           </div>
         </div>
       </div>
+      
     </div>
   );
 };
