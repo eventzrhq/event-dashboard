@@ -8,6 +8,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import AppsDropdown from "./AppsDropdown";
+import NotificationsDialog from "./NotificationsDialog";
 
 interface HeaderProps {
   onMobileMenuToggle?: () => void;
@@ -16,6 +17,7 @@ interface HeaderProps {
 
 const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showNotifications, setShowNotifications] = useState(false);
 
   return (
     <div className="bg-white dark:bg-slate-800/50 border-b border-gray-200 dark:border-slate-700/50 backdrop-blur-sm">
@@ -121,11 +123,20 @@ const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="">
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="relative"
+                    onClick={() => setShowNotifications(true)}
+                  >
                     <Icon
                       name="bell-custom"
                       className="w-5 h-5 text-gray-600 dark:text-gray-300"
                     />
+                    {/* Notification Badge */}
+                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-medium rounded-full flex items-center justify-center">
+                      5
+                    </span>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -190,11 +201,20 @@ const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="">
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="relative"
+                    onClick={() => setShowNotifications(true)}
+                  >
                     <Icon
                       name="bell-custom"
                       className="w-5 h-5 text-gray-600 dark:text-gray-300"
                     />
+                    {/* Notification Badge */}
+                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-medium rounded-full flex items-center justify-center">
+                      5
+                    </span>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -265,6 +285,11 @@ const Header = ({ onMobileMenuToggle, onNavigate }: HeaderProps) => {
         </div>
       </div>
       
+      {/* Notifications Dialog */}
+      <NotificationsDialog 
+        isOpen={showNotifications} 
+        onClose={() => setShowNotifications(false)} 
+      />
     </div>
   );
 };
