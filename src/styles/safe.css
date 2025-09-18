@@ -1,0 +1,54 @@
+/* navbar toggler */
+input#nav-toggle:checked + label #show-button {
+  #ham_top {
+    @apply rotate-45 translate-y-1.5;
+  }
+  #ham_bottom {
+    @apply -rotate-45 -translate-y-2;
+  }
+}
+
+input#nav-toggle:checked ~ #nav-menu {
+  @apply block lg:flex;
+}
+
+/* apply above css only below 1024px */
+@media (max-width: 1024px) {
+  #all-pages-dropdown.active {
+    @apply block;
+  }
+}
+
+/* form style */
+.form-input {
+  @apply w-full rounded-xl bg-light/60 px-6 py-4 text-white placeholder:text-white/30 border border-border focus:border-border focus:ring-transparent;
+}
+
+.form-label {
+  @apply mb-4 block text-base font-medium text-white;
+}
+
+/* swiper pagination */
+.swiper-pagination-bullet {
+  @apply h-2.5 w-2.5 bg-light opacity-100;
+}
+.swiper-pagination-bullet-active {
+  @apply h-4 w-4 bg-primary;
+}
+
+/* Swiper Animation */
+.is-brands-slider {
+  @apply bg-light/60 py-7;
+}
+
+.is-brands-slider .swiper-wrapper {
+  -webkit-transition-timing-function: linear !important;
+  transition-timing-function: linear !important;
+}
+.is-brands-slider .swiper-slide {
+  width: auto;
+  @apply mx-8 lg:mx-10;
+}
+.is-brands-slider .swiper-slide img {
+  @apply h-14;
+}

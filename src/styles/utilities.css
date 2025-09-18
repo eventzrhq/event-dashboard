@@ -1,0 +1,6 @@
+@utility inside-shadow {
+  @apply shadow-[inset_0_-10px_40px_var(--color-shadow)];
+}
+@utility inside-shadow-sm {
+  @apply shadow-[inset_0_2px_6px_var(--color-shadow)];
+}
