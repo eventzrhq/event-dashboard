@@ -1,0 +1,161 @@
+{
+  "main": [
+    {
+      "name": "All Pages",
+      "url": "",
+      "hasMegamenu": true,
+      "children": [
+        {
+          "name": "Landing",
+          "children": [
+            {
+              "name": "Home",
+              "description": "A Colorful Dark World",
+              "url": "/darkrise"
+            },
+            {
+              "name": "Elements",
+              "url": "/darkrise/elements",
+              "description": "A collection of UI elements"
+            }
+          ]
+        },
+        {
+          "name": "Essentials",
+          "children": [
+            {
+              "name": "About",
+              "url": "/darkrise/about"
+            },
+            {
+              "name": "Pricing",
+              "url": "/darkrise/pricing"
+            },
+            {
+              "name": "Integrations",
+              "url": "/darkrise/integration"
+            },
+
+            {
+              "name": "Blog Details",
+              "url": "/darkrise/blog/post-1"
+            },
+            {
+              "name": "Feature",
+              "url": "/darkrise/feature"
+            },
+            {
+              "name": "Blog",
+              "url": "/darkrise/blog"
+            },
+
+            {
+              "name": "Integrations Details",
+              "url": "/darkrise/integration/intercom"
+            },
+            {
+              "name": "Changelog",
+              "url": "/darkrise/changelog"
+            },
+            {
+              "name": "Contact",
+              "url": "/darkrise/contact"
+            },
+            {
+              "name": "Terms",
+              "url": "/darkrise/terms-conditions"
+            },
+            {
+              "name": "Privacy",
+              "url": "/darkrise/privacy-policy"
+            },
+            {
+              "name": "404",
+              "url": "/darkrise/404"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "",
+      "url": "",
+      "hasChildren": true,
+      "children": [
+        {
+          "name": "About",
+          "url": "/darkrise/about"
+        },
+        {
+          "name": "Pricing",
+          "url": "/darkrise/pricing"
+        },
+        {
+          "name": "Integrations",
+          "url": "/darkrise/integration"
+        },
+        {
+          "name": "Integrations Details",
+          "url": "/darkrise/integration"
+        },
+        {
+          "name": "Feature",
+          "url": "/darkrise/feature"
+        },
+        {
+          "name": "Blog",
+          "url": "/darkrise/blog"
+        },
+        {
+          "name": "Blog Details",
+          "url": "/darkrise"
+        },
+        {
+          "name": "Changelog",
+          "url": "/darkrise/changelog"
+        }
+      ]
+    },
+    {
+      "name": "Integrations",
+      "url": "/darkrise/integration"
+    },
+    {
+      "name": "Pricing",
+      "url": "/darkrise/pricing"
+    },
+    {
+      "name": "Contact",
+      "url": "/darkrise/contact"
+    }
+  ],
+  "footer": [
+    { "name": "Privacy Policy", "url": "/darkrise/privacy-policy" },
+    { "name": "Terms & Conditions", "url": "/darkrise/terms-conditions" }
+  ],
+  "company": [
+    { "name": "About", "url": "/darkrise/about" },
+    { "name": "Product Features", "url": "/darkrise/feature" },
+    { "name": "Changelog", "url": "/darkrise/changelog" },
+    { "name": "Contact", "url": "/darkrise/contact" }
+  ],
+  "product": [
+    { "name": "Pricing & Plans", "url": "/darkrise/pricing" },
+    { "name": "Product Features", "url": "/darkrise/feature" },
+    { "name": "Integration", "url": "/darkrise/integration" },
+    { "name": "Integration Details", "url": "/darkrise/integration/kickstar" }
+  ],
+  "resources": [
+    { "name": "Blog", "url": "/darkrise/blog" },
+    {
+      "name": "Blog Details",
+      "url": "/darkrise/blog/post-1"
+    },
+    { "name": "Changelog", "url": "/darkrise/changelog" }
+  ],
+  "services": [
+    { "name": "Elements", "url": "/darkrise/elements" },
+    { "name": "Contact", "url": "/darkrise/contact" },
+    { "name": "404", "url": "/darkrise/404" }
+  ]
+}

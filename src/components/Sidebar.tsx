@@ -124,6 +124,48 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
     },
   ];
 
+  const darkRiseMenuItems: MenuItem[] = [
+    {
+      id: "darkrise",
+      label: "DarkRise Pages",
+      icon: "moon",
+      children: [
+        {
+          id: "darkrise-home",
+          label: "Homepage",
+        },
+        {
+          id: "darkrise-about",
+          label: "About",
+        },
+        {
+          id: "darkrise-blog",
+          label: "Blog",
+        },
+        {
+          id: "darkrise-contact",
+          label: "Contact",
+        },
+        {
+          id: "darkrise-feature",
+          label: "Features",
+        },
+        {
+          id: "darkrise-pricing",
+          label: "Pricing",
+        },
+        {
+          id: "darkrise-integration",
+          label: "Integration",
+        },
+        {
+          id: "darkrise-changelog",
+          label: "Changelog",
+        },
+      ],
+    },
+  ];
+
   const userMenuItems: MenuItem[] = [
     {
       id: "my-zars",
@@ -285,18 +327,18 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
     },
   ];
 
-  const helpItems: MenuItem[] = [
-    {
-      id: "support",
-      label: "Support",
-      icon: "support",
-    },
-    {
-      id: "settings",
-      label: "Setting",
-      icon: "settings",
-    },
-  ];
+  // const helpItems: MenuItem[] = [
+  //   {
+  //     id: "support",
+  //     label: "Support",
+  //     icon: "support",
+  //   },
+  //   {
+  //     id: "settings",
+  //     label: "Setting",
+  //     icon: "settings",
+  //   },
+  // ];
 
   const otherItems: MenuItem[] = [
     {
@@ -489,6 +531,69 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
                                     routePath = '/cloud-peak';
                                   } else {
                                     routePath = `/cloud-peak/${child.id.replace('cloud-peak-', '')}`;
+                                  }
+                                  window.location.href = routePath;
+                                }}
+                                className="flex items-center w-full px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200"
+                              >
+                                {child.label}
+                              </button>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          </div>
+
+          {/* DarkRise Pages */}
+          <div className="py-2 px-4">
+            {!isCollapsed && (
+              <h3 className="text-xs font-semibold text-gray-700 dark:text-gray-300 px-5 py-2 uppercase tracking-wider">
+                DarkRise Pages
+              </h3>
+            )}
+            <div className="space-y-1">
+              {darkRiseMenuItems.map((item) => {
+                if (item.children) {
+                  return (
+                    <Accordion
+                      key={item.id}
+                      type="single"
+                      collapsible
+                      className="w-full"
+                      value={openAccordion}
+                      onValueChange={setOpenAccordion}
+                    >
+                      <AccordionItem value={item.id} className="border-none">
+                        <AccordionTrigger className="flex items-center justify-between w-full px-5 py-3 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200 [&[data-state=open]>svg]:rotate-180">
+                          <div className="flex items-center space-x-3">
+                            {item.icon && (
+                              <Icon
+                                name={item.icon}
+                                className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                              />
+                            )}
+                            {!isCollapsed && (
+                              <span className="font-medium">{item.label}</span>
+                            )}
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-0">
+                          <div className="ml-8 space-y-1">
+                            {item.children.map((child) => (
+                              <button
+                                key={child.id}
+                                onClick={() => {
+                                  let routePath;
+                                  if (child.id === 'darkrise-home') {
+                                    routePath = '/darkrise';
+                                  } else {
+                                    routePath = `/darkrise/${child.id.replace('darkrise-', '')}`;
                                   }
                                   window.location.href = routePath;
                                 }}
@@ -750,9 +855,9 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
               })}
             </div>
         </div>
-
-        {/* Help */}
-        {renderMenuSection("Help", helpItems)}
+{/* 
+        Help
+        {renderMenuSection("Help", helpItems)} */}
 
         {/* Others */}
           <div className="py-2 px-4">
