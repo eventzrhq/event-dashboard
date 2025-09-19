@@ -1,13 +1,11 @@
 "use client";
 
-import config from "@/config/config.json";
 import theme from "@/config/theme.json";
 import TwSizeIndicator from "@/layouts/helpers/TwSizeIndicator";
 import Footer from "@/layouts/partials/Footer";
 import Header from "@/layouts/partials/Header";
 import Providers from "@/layouts/partials/Providers";
 import "@/styles/main.css";
-import { GoogleTagManager } from "@next/third-parties/google";
 import "aos/dist/aos.css";
 
 export default function CloudPeakLayout({

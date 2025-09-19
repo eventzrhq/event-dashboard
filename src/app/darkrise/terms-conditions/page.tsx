@@ -22,16 +22,16 @@ const TermsConditions = () => {
                 <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
                 
                 <h2>Use License</h2>
-                <p>Permission is granted to temporarily download one copy of the materials on DarkRise's website for personal, non-commercial transitory viewing only.</p>
+                <p>Permission is granted to temporarily download one copy of the materials on DarkRise&apos;s website for personal, non-commercial transitory viewing only.</p>
                 
                 <h2>Disclaimer</h2>
-                <p>The materials on DarkRise's website are provided on an 'as is' basis. DarkRise makes no warranties, expressed or implied.</p>
+                <p>The materials on DarkRise&apos;s website are provided on an &apos;as is&apos; basis. DarkRise makes no warranties, expressed or implied.</p>
                 
                 <h2>Limitations</h2>
-                <p>In no event shall DarkRise or its suppliers be liable for any damages arising out of the use or inability to use the materials on DarkRise's website.</p>
+                <p>In no event shall DarkRise or its suppliers be liable for any damages arising out of the use or inability to use the materials on DarkRise&apos;s website.</p>
                 
                 <h2>Accuracy of Materials</h2>
-                <p>The materials appearing on DarkRise's website could include technical, typographical, or photographic errors.</p>
+                <p>The materials appearing on DarkRise&apos;s website could include technical, typographical, or photographic errors.</p>
                 
                 <h2>Contact Information</h2>
                 <p>If you have any questions about these Terms & Conditions, please contact us.</p>

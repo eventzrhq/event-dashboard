@@ -17,7 +17,7 @@ const Posts = () => {
   const pageHeaderIndexData = postIndex.frontmatter.page_header;
   const readMoreIndexData = postIndex.frontmatter.read_more_blogs;
   const posts: Post[] = getSinglePage(blog_folder);
-  let sortedPosts = sortByDate(posts);
+  const sortedPosts = sortByDate(posts);
   const allUniqueCategories = getTaxonomy(blog_folder, "categories");
 
   return (
