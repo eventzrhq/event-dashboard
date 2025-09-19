@@ -81,6 +81,9 @@ const colorsMap = {};
   });
 });
 
+// Add custom 'dark' color for gradient utilities
+colorsMap['dark'] = '#000000';
+
 module.exports = plugin.withOptions(() => {
   return function ({ addBase, addUtilities, matchUtilities }) {
     // Default vars on :root; dark vars on .dark
