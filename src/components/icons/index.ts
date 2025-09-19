@@ -24,6 +24,8 @@ export { default as BellIcon } from './BellIcon';
 export { default as BoxIcon } from './BoxIcon';
 export { default as HeartIcon } from './HeartIcon';
 export { default as ShoppingBagIcon } from './ShoppingBagIcon';
+export { default as ShoppingBagOnHoldIcon } from './ShoppingBagOnHoldIcon';
+export { default as DeliveredIcon } from './DeliveredIcon';
 export { default as CheckIcon } from './CheckIcon';
 export { default as UserSwitchIcon } from './UserSwitchIcon';
 export { default as GlobalIcon } from './GlobalIcon';

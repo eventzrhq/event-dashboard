@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Layout from "@/components/Layout";
-import MainContent from "@/components/MainContent";
-import Calendar from "@/components/Calendar";
-import SupportTickets from "@/components/SupportTickets";
-import CRM from "@/components/CRM";
-import Dashboard from "@/components/Dashboard";
-import ChatApp from "@/components/ChatApp";
-import UserProfile from "@/components/UserProfile";
+import Layout from "@/components/layout/Layout";
+import MainContent from "@/components/screens/MainContent";
+import Calendar from "@/components/screens/Calendar";
+import SupportTickets from "@/components/screens/SupportTickets";
+import CRM from "@/components/screens/CRM";
+import Dashboard from "@/components/screens/Dashboard";
+import ChatApp from "@/components/screens/ChatApp";
+import UserProfile from "@/components/screens/UserProfile";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState("dashboard");

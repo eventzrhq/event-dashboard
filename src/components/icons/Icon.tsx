@@ -25,6 +25,8 @@ import {
   BoxIcon,
   HeartIcon,
   ShoppingBagIcon,
+  ShoppingBagOnHoldIcon,
+  DeliveredIcon,
   CheckIcon,
   UserSwitchIcon,
   GlobalIcon,
@@ -72,6 +74,8 @@ export type IconName =
   | "box"
   | "heart-custom"
   | "shopping-bag-custom"
+  | "shopping-bag-on-hold"
+  | "delivered"
   | "check-custom"
   | "user-switch"
   | "global"
@@ -218,6 +222,10 @@ export const Icon = ({ name, className }: IconProps) => {
       return <HeartIcon className={className} />;
     case "shopping-bag-custom":
       return <ShoppingBagIcon className={className} />;
+    case "shopping-bag-on-hold":
+      return <ShoppingBagOnHoldIcon className={className} />;
+    case "delivered":
+      return <DeliveredIcon className={className} />;
     case "check-custom":
       return <CheckIcon className={className} />;
     case "user-switch":
