@@ -1,6 +1,6 @@
 "use client";
 
-import PriceCard from "@/components/PriceCard";
+import PriceCard from "@/components/cards/PriceCard";
 import { priceTogglerInit } from "@/lib/utils/priceToggler";
 import { markdownify } from "@/lib/utils/textConverter";
 import { PricingSection } from "@/types";

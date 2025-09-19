@@ -1,4 +1,4 @@
-import TeamCard from "@/components/TeamCard";
+import TeamCard from "@/components/cards/TeamCard";
 import { getListPage } from "@/lib/contentParser";
 import { markdownify } from "@/lib/utils/textConverter";
 import { TeamSection } from "@/types";

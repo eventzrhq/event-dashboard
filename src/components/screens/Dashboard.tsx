@@ -778,7 +778,7 @@ const Dashboard = () => {
                   innerRadius={0.6}
                   padAngle={1}
                   cornerRadius={2}
-                  colors={({ data }: any) => data.color}
+                  colors={({ data }: { data: { color: string } }) => data.color}
                   enableArcLabels={false}
                   enableArcLinkLabels={false}
                   isInteractive={true}

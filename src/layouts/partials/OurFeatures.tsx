@@ -1,5 +1,5 @@
-import PrimaryArrowBtn from "@/components/PrimaryArrowBtn";
-import ProcessCard from "@/components/ProcessCard";
+import PrimaryArrowBtn from "@/components/buttons/PrimaryArrowBtn";
+import ProcessCard from "@/components/cards/ProcessCard";
 import { getListPage } from "@/lib/contentParser";
 import { markdownify } from "@/lib/utils/textConverter";
 import { FeaturesSection } from "@/types";

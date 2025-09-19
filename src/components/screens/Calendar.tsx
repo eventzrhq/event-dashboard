@@ -179,11 +179,11 @@ const Calendar = () => {
             </div>
           </div>
 
-          {/* Today's Appointments Sidebar */}
+          {/* Today&apos;s Appointments Sidebar */}
           <div className="xl:col-span-1">
             <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-200 dark:border-slate-700">
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6">
-                Today's Appointments
+                Today&apos;s Appointments
               </h3>
 
               <div className="space-y-4">

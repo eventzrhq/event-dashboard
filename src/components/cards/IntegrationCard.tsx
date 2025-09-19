@@ -1,6 +1,6 @@
 import ImageFallback from "@/helpers/ImageFallback";
 import { markdownify } from "@/lib/utils/textConverter";
-import RightArrowBtn from "./RightArrowBtn";
+import RightArrowBtn from "@/components/buttons/RightArrowBtn";
 
 const IntegrationCard = ({
   title,

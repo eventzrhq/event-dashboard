@@ -1,6 +1,6 @@
 import ImageFallback from "@/helpers/ImageFallback";
 import { markdownify } from "@/lib/utils/textConverter";
-import ArrowBtn from "./ArrowBtn";
+import ArrowBtn from "@/components/buttons/ArrowBtn";
 
 const CaseStudyCard = ({
   title,

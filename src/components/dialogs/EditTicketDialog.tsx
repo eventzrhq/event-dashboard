@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Icon } from "../icons";
 import { cn } from "@/lib/utils";
-import { SupportTicket } from "./SupportTicketList";
+import { SupportTicket } from "../support/SupportTicketList";
 
 interface EditTicketDialogProps {
   isOpen: boolean;

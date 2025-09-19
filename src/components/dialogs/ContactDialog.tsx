@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Icon } from "../icons";
 import { cn } from "@/lib/utils";
-import { Contact } from "./CRM";
+import { Contact } from "../screens/CRM";
 
 interface ContactDialogProps {
   isOpen: boolean;

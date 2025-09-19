@@ -1,5 +1,5 @@
 import { markdownify } from "@/lib/utils/textConverter";
-import SvgWindspeedLogo from "./svgs/SvgWindspeedLogo";
+import SvgWindspeedLogo from "@/components/svgs/SvgWindspeedLogo";
 
 const OurCommitmentCard = ({
   title,

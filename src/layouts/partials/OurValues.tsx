@@ -1,4 +1,4 @@
-import OurCommitmentCard from "@/components/OurCommitmentCard";
+import OurCommitmentCard from "@/components/cards/OurCommitmentCard";
 import ImageFallback from "@/helpers/ImageFallback";
 import { getListPage } from "@/lib/contentParser";
 import { ValuesSection } from "@/types";

@@ -3,8 +3,8 @@ import ImageFallback from "@/helpers/ImageFallback";
 import dateFormat from "@/lib/utils/dateFormat";
 import { markdownify, plainify } from "@/lib/utils/textConverter";
 import { Post } from "@/types";
-import ArrowBtn from "./ArrowBtn";
-import CardTag from "./CardTag";
+import ArrowBtn from "@/components/buttons/ArrowBtn";
+import CardTag from "@/components/common/CardTag";
 
 const BlogCard = ({ data, aosDelay }: { data: Post; aosDelay?: number }) => {
   const { summary_length } = config.settings;

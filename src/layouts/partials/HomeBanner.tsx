@@ -1,4 +1,4 @@
-import PrimaryArrowBtn from "@/components/PrimaryArrowBtn";
+import PrimaryArrowBtn from "@/components/buttons/PrimaryArrowBtn";
 import ImageFallback from "@/helpers/ImageFallback";
 import { getListPage } from "@/lib/contentParser";
 import { markdownify } from "@/lib/utils/textConverter";

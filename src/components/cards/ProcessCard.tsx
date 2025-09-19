@@ -1,6 +1,6 @@
 import ImageFallback from "@/helpers/ImageFallback";
 import { markdownify } from "@/lib/utils/textConverter";
-import SvgGrowthUpward from "./svgs/SvgGrowthUpward";
+import SvgGrowthUpward from "@/components/svgs/SvgGrowthUpward";
 
 const ProcessCard = ({
   imageSrc,

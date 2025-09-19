@@ -1,4 +1,4 @@
-import OurMissionCard from "@/components/OurMissionCard";
+import OurMissionCard from "@/components/cards/OurMissionCard";
 import { getListPage } from "@/lib/contentParser";
 import { markdownify } from "@/lib/utils/textConverter";
 import { JourneySection } from "@/types";

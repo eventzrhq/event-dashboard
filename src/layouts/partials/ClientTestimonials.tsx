@@ -1,4 +1,4 @@
-import TestimonialCard from "@/components/TestimonialCard";
+import TestimonialCard from "@/components/cards/TestimonialCard";
 import { getListPage } from "@/lib/contentParser";
 import { markdownify } from "@/lib/utils/textConverter";
 import { Testimonials } from "@/types";

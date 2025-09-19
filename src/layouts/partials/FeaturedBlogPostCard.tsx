@@ -1,5 +1,5 @@
-import CardTag from "@/components/CardTag";
-import PrimaryArrowBtn from "@/components/PrimaryArrowBtn";
+import CardTag from "@/components/common/CardTag";
+import PrimaryArrowBtn from "@/components/buttons/PrimaryArrowBtn";
 import ImageFallback from "@/helpers/ImageFallback";
 import dateFormat from "@/lib/utils/dateFormat";
 import { markdownify, plainify } from "@/lib/utils/textConverter";

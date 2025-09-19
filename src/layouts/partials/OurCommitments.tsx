@@ -1,4 +1,4 @@
-import OurCommitmentCard from "@/components/OurCommitmentCard";
+import OurCommitmentCard from "@/components/cards/OurCommitmentCard";
 import { getListPage } from "@/lib/contentParser";
 import { markdownify } from "@/lib/utils/textConverter";
 import { Commitments } from "@/types";
