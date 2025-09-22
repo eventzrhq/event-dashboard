@@ -195,7 +195,7 @@ const UserProfile = () => {
                             <p className="text-sm text-gray-500 dark:text-gray-400">2 Days Ago</p>
                           </div>
                           <button className="p-1 hover:bg-gray-100 dark:hover:bg-slate-700 rounded">
-                            <Icon name="more-vertical" className="w-5 h-5 text-gray-400" />
+                            <Icon name="x" className="w-5 h-5 text-gray-400" />
                           </button>
                         </div>
                         <p className="text-gray-700 dark:text-gray-300 mb-4">
@@ -345,7 +345,7 @@ const UserProfile = () => {
                             <p className="text-sm text-gray-500 dark:text-gray-400">2 Days Ago</p>
                           </div>
                           <button className="p-1 hover:bg-gray-100 dark:hover:bg-slate-700 rounded">
-                            <Icon name="more-vertical" className="w-5 h-5 text-gray-400" />
+                            <Icon name="x" className="w-5 h-5 text-gray-400" />
                           </button>
                         </div>
                         <p className="text-gray-700 dark:text-gray-300 mb-4">
