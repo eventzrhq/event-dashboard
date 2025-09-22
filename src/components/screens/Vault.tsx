@@ -20,9 +20,9 @@ const Vault = () => {
   const fileCategories = [
     { label: "Images", count: "24k files", size: "25 GB", color: "bg-blue-500", icon: "camera" },
     { label: "Documents", count: "15k files", size: "15 GB", color: "bg-red-500", icon: "document" },
-    { label: "Media", count: "8k files", size: "8 GB", color: "bg-yellow-500", icon: "video" },
-    { label: "Videos", count: "5k files", size: "5 GB", color: "bg-green-500", icon: "video" },
-    { label: "Music 2025", count: "2k files", size: "2 GB", color: "bg-teal-600", icon: "music" },
+    { label: "Media", count: "8k files", size: "8 GB", color: "bg-yellow-500", icon: "camera" },
+    { label: "Videos", count: "5k files", size: "5 GB", color: "bg-green-500", icon: "camera" },
+    { label: "Music 2025", count: "2k files", size: "2 GB", color: "bg-teal-600", icon: "document" },
   ];
 
   const recentFolders = [
@@ -60,7 +60,7 @@ const Vault = () => {
                           <path opacity="0.4" d="M12.083 4.45732L13.2357 3.30464C14.0508 2.48957 14.4583 2.08203 14.9647 2.08203C15.4711 2.08203 15.8787 2.48957 16.6937 3.30464C17.5088 4.11971 17.9163 4.52724 17.9163 5.03366C17.9163 5.54008 17.5088 5.94761 16.6937 6.76268L15.5411 7.91536" stroke="white" strokeWidth="1.25" strokeLinejoin="round"/>
                         </svg>
                       ) : (
-                        <Icon name="folder" className="w-6 h-6 text-white" />
+                        <Icon name="box" className="w-6 h-6 text-white" />
                       )}
                     </div>
                     
@@ -96,7 +96,7 @@ const Vault = () => {
                 {fileCategories.map((category, index) => (
                   <div key={index} className="text-center p-4 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer">
                     <div className={`w-16 h-16 ${category.color} rounded-full flex items-center justify-center mx-auto mb-3`}>
-                      <Icon name={category.icon as "camera" | "document" | "video" | "music"} className="w-8 h-8 text-white" />
+                      <Icon name={category.icon as "camera" | "document"} className="w-8 h-8 text-white" />
                     </div>
                     <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
                       {category.label}
@@ -143,7 +143,7 @@ const Vault = () => {
                       <tr key={index} className="border-b border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">
                         <td className="py-4 px-4">
                           <div className="flex items-center space-x-3">
-                            <Icon name="folder" className="w-5 h-5 text-blue-500" />
+                            <Icon name="box" className="w-5 h-5 text-blue-500" />
                             <span className="font-medium text-gray-900 dark:text-white">
                               {folder.name}
                             </span>
@@ -160,7 +160,7 @@ const Vault = () => {
                         </td>
                         <td className="py-4 px-4 text-center">
                           <button className="p-2 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors">
-                            <Icon name="more-vertical" className="w-4 h-4 text-gray-400" />
+                            <Icon name="x" className="w-4 h-4 text-gray-400" />
                           </button>
                         </td>
                       </tr>
@@ -181,7 +181,7 @@ const Vault = () => {
               
               {/* Upload Area */}
               <div className="border-2 border-dashed border-blue-300 rounded-lg p-8 text-center mb-6 bg-blue-50 dark:bg-blue-900/10">
-                <Icon name="upload" className="w-12 h-12 text-blue-500 mx-auto mb-4" />
+                <Icon name="plus" className="w-12 h-12 text-blue-500 mx-auto mb-4" />
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                   Select a file or drag and drop here
                 </p>
@@ -210,8 +210,8 @@ const Vault = () => {
                       file.status === 'uploading' ? 'bg-blue-100' : 'bg-red-100'
                     }`}>
                       <Icon name={
-                        file.status === 'completed' ? 'check' : 
-                        file.status === 'uploading' ? 'upload' : 'x'
+                        file.status === 'completed' ? 'check-custom' : 
+                        file.status === 'uploading' ? 'plus' : 'x'
                       } className={`w-4 h-4 ${
                         file.status === 'completed' ? 'text-green-600' : 
                         file.status === 'uploading' ? 'text-blue-600' : 'text-red-600'
@@ -301,7 +301,7 @@ const Vault = () => {
               {/* Upgrade Section */}
               <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-4 text-center text-white">
                 <div className="mb-3">
-                  <Icon name="rocket" className="w-8 h-8 mx-auto mb-2" />
+                  <Icon name="plus" className="w-8 h-8 mx-auto mb-2" />
                   <p className="text-sm font-medium">Upgrade to Pro for Unlimited Storage</p>
                 </div>
                 <Button className="bg-white text-blue-600 hover:bg-gray-100 text-sm px-4 py-2">

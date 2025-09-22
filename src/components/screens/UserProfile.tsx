@@ -216,7 +216,7 @@ const UserProfile = () => {
                             <div className="absolute inset-0 bg-gradient-to-br from-pink-600 to-red-700"></div>
                             <div className="relative z-10 text-center text-white">
                               <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mx-auto">
-                                <Icon name="video" className="w-6 h-6" />
+                                <Icon name="camera" className="w-6 h-6" />
                               </div>
                             </div>
                           </div>
