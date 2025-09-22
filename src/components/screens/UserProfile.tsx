@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Icon } from "../icons";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 const UserProfile = () => {
   const [activeTab, setActiveTab] = useState("profile");
