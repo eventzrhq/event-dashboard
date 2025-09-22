@@ -258,44 +258,44 @@ const Calendar = () => {
         </div>
       </div>
 
-      {/* Create Appointment Drawer */}
+      {/* Create Appointment Drawer - Integrated between header and footer */}
       {isDrawerOpen && (
-        <div className="fixed inset-0 z-50 overflow-hidden">
-          {/* Drawer */}
-          <div className="fixed right-0 top-0 h-full w-96 bg-white shadow-xl transform transition-transform">
-            <div className="flex flex-col h-full">
-              {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b">
-                <h2 className="text-lg font-semibold text-gray-900">Create Appointment</h2>
-                <button
-                  onClick={() => setIsDrawerOpen(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  <Icon name="x" className="w-5 h-5 text-gray-500" />
-                </button>
-              </div>
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-200 dark:border-slate-700 shadow-sm mb-6">
+          <div className="flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Create Appointment</h2>
+              <button
+                onClick={() => setIsDrawerOpen(false)}
+                className="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+              >
+                <Icon name="x" className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              </button>
+            </div>
 
-              {/* Form */}
-              <div className="flex-1 overflow-y-auto p-6">
+            {/* Content */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Left Column - Form */}
+              <div className="space-y-6">
                 <form className="space-y-6">
                   {/* Title */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Title*
                     </label>
                     <input
                       type="text"
                       placeholder="Meeting with client"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
                     />
                   </div>
 
                   {/* Category */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Category*
                     </label>
-                    <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    <select className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white">
                       <option value="">Select category</option>
                       <option value="meeting">Meeting</option>
                       <option value="conference">Conference</option>
@@ -304,91 +304,99 @@ const Calendar = () => {
                     </select>
                   </div>
 
-                  {/* Date */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Date*
-                    </label>
-                    
-                    {/* Mini Calendar Widget */}
-                    <div className="border-2 border-blue-400 rounded-lg p-4 bg-gray-50">
-                      {/* Calendar Header */}
-                      <div className="flex items-center justify-between mb-4">
-                        <button className="p-1 hover:bg-gray-200 rounded">
-                          <Icon name="chevron-left" className="w-4 h-4 text-gray-600" />
-                        </button>
-                        <h3 className="text-sm font-semibold text-gray-900">September 2025</h3>
-                        <button className="p-1 hover:bg-gray-200 rounded">
-                          <Icon name="chevron-right" className="w-4 h-4 text-gray-600" />
-                        </button>
-                      </div>
-                      
-                      {/* Calendar Days Header */}
-                      <div className="grid grid-cols-7 gap-1 mb-2">
-                        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
-                          <div key={index} className="text-center text-xs font-medium text-gray-500 py-1">
-                            {day}
-                          </div>
-                        ))}
-                      </div>
-                      
-                      {/* Calendar Days */}
-                      <div className="grid grid-cols-7 gap-1">
-                        {[24, 25, 26, 27, 28, 29, 30].map((date, index) => (
-                          <button
-                            key={index}
-                            className={`text-center text-sm py-2 rounded-full hover:bg-gray-200 transition-colors ${
-                              date === 25 ? 'bg-black text-white' : 'text-gray-700'
-                            }`}
-                          >
-                            {date}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
                   {/* Time */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Time*
                     </label>
                     <input
                       type="time"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
                     />
                   </div>
 
                   {/* Location */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Location*
                     </label>
                     <input
                       type="text"
                       placeholder="Conference Room, Zoom Etc."
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
                     />
                   </div>
 
                   {/* Description */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Description*
                     </label>
                     <textarea
                       rows={4}
                       placeholder="More about appointment"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
                     />
                   </div>
                 </form>
               </div>
 
-              {/* Footer */}
-              <div className="p-6 border-t">
+              {/* Right Column - Date Picker */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Date*
+                </label>
+                
+                {/* Mini Calendar Widget */}
+                <div className="border-2 border-blue-400 rounded-lg p-4 bg-gray-50 dark:bg-slate-700">
+                  {/* Calendar Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <button className="p-1 hover:bg-gray-200 dark:hover:bg-slate-600 rounded">
+                      <Icon name="chevron-left" className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                    </button>
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white">September 2025</h3>
+                    <button className="p-1 hover:bg-gray-200 dark:hover:bg-slate-600 rounded">
+                      <Icon name="chevron-right" className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                    </button>
+                  </div>
+                  
+                  {/* Calendar Days Header */}
+                  <div className="grid grid-cols-7 gap-1 mb-2">
+                    {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+                      <div key={index} className="text-center text-xs font-medium text-gray-500 dark:text-gray-400 py-1">
+                        {day}
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Calendar Days */}
+                  <div className="grid grid-cols-7 gap-1">
+                    {[24, 25, 26, 27, 28, 29, 30].map((date, index) => (
+                      <button
+                        key={index}
+                        className={`text-center text-sm py-2 rounded-full hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors ${
+                          date === 25 ? 'bg-black text-white' : 'text-gray-700 dark:text-gray-300'
+                        }`}
+                      >
+                        {date}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-slate-700">
+              <div className="flex space-x-3">
+                <button
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700"
+                >
+                  Cancel
+                </button>
                 <Button 
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
                   onClick={() => setIsDrawerOpen(false)}
                 >
                   Save Appointment
