@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import React from "react";
 import { Button } from "../ui/button";
 import { Icon } from "../icons";
 
 const Vault = () => {
-  const [uploadFiles, setUploadFiles] = useState([
+  const uploadFiles = [
     { id: 1, name: "Twitter task-01.zip", size: "25 MB", status: "completed", progress: 100 },
     { id: 2, name: "Twitter task-02.png", size: "25 MB", status: "uploading", progress: 75 },
     { id: 3, name: "Twitter task-3.mp4", size: "25 MB", status: "failed", progress: 0 },
-  ]);
+  ];
 
   const storageData = [
     { label: "Storage Used", value: "15 GB", total: "25 GB", percentage: 60, color: "bg-blue-500" },
@@ -96,7 +96,7 @@ const Vault = () => {
                 {fileCategories.map((category, index) => (
                   <div key={index} className="text-center p-4 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer">
                     <div className={`w-16 h-16 ${category.color} rounded-full flex items-center justify-center mx-auto mb-3`}>
-                      <Icon name={category.icon as any} className="w-8 h-8 text-white" />
+                      <Icon name={category.icon as "camera" | "document" | "video" | "music"} className="w-8 h-8 text-white" />
                     </div>
                     <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
                       {category.label}

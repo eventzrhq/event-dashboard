@@ -113,7 +113,7 @@ const UserProfile = () => {
         {/* Navigation Tabs */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-8">
-            {tabs.map((tab, index) => (
+            {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
