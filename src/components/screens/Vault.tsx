@@ -112,13 +112,13 @@ const Vault = () => {
           {/* First Grid - Storage Details, Storage Insights, Studio V 1.1 */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 w-4/5">
             {/* Storage Details Card */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg border border-gray-200 dark:border-slate-700 col-span-2 hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-white dark:bg-slate-800 rounded-xl p-8 border border-gray-200 dark:border-slate-700 col-span-2">
               <div className="flex items-center justify-between mb-8">
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Storage Details</h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">Overview of your storage usage</p>
                 </div>
-                <span className="bg-gradient-to-r from-red-100 to-red-200 text-red-800 text-sm font-semibold px-4 py-2 rounded-full dark:from-red-900 dark:to-red-800 dark:text-red-200 shadow-sm">
+                <span className="bg-gradient-to-r from-red-100 to-red-200 text-red-800 text-sm font-semibold px-4 py-2 rounded-full dark:from-red-900 dark:to-red-800 dark:text-red-200">
                   Used 77%
                 </span>
               </div>
@@ -127,10 +127,10 @@ const Vault = () => {
               <div className="grid grid-cols-2 gap-6">
                 {/* Left side - Pie Chart */}
                 <div className="flex flex-col items-center">
-                  <div className="h-72 w-full -mt-10 ml-15 rotate-[95deg] relative">
+                  <div className="h-72 w-full -mt-14 ml-15 rotate-[95deg] relative">
                   <ResponsivePie
                     data={storageBreakdown}
-                    margin={{ top: 10, right: 10, bottom: 40, left: 10 }}
+                    margin={{ top: 60, right: 60, bottom: 60, left: 60 }}
                     innerRadius={0.7}
                     padAngle={0}
                     cornerRadius={0}
@@ -190,8 +190,8 @@ const Vault = () => {
                   </div>
                   
                   {/* Storage info */}
-                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 w-full -mt-18">
-                    <div className="text-center">
+                  <div className="flex justify-between text-sm text-gray-600 pl-5 divi  pr-13 dark:text-gray-400 w-full -mt-23">
+                    <div className="text-center border-r-2 pr-19 border-gray-200 dark:border-gray-700">
                       <div className="text-lg font-bold text-gray-900 dark:text-white">15 GB</div>
                       <div className="text-xs">Total Space</div>
                     </div>
@@ -221,7 +221,7 @@ const Vault = () => {
             </div>
 
             {/* Storage Insights Card */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-slate-700 col-span-1 hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700 col-span-1">
               <div className="mb-6">
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Storage Insights</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">Quick overview</p>
@@ -230,7 +230,7 @@ const Vault = () => {
               <div className="space-y-4">
                 {storageInsights.map((insight, index) => (
                   <div key={index} className="flex items-start space-x-4 w-full p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors duration-200">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center shadow-sm ${
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
                       insight.color === 'text-red-500' ? 'bg-red-100 dark:bg-red-900' :
                       insight.color === 'text-yellow-500' ? 'bg-yellow-100 dark:bg-yellow-900' :
                       'bg-green-100 dark:bg-green-900'
@@ -253,7 +253,7 @@ const Vault = () => {
             </div>
 
             {/* Studio V 1.1 Card */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl p-6 col-span-3 shadow-sm border border-gray-200 dark:border-slate-700">
+            <div className="bg-white dark:bg-slate-800 rounded-xl p-6 col-span-3 border border-gray-200 dark:border-slate-700">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Studio V 1.1</h3>
               
               <div className="mb-6">
@@ -307,7 +307,7 @@ const Vault = () => {
           {/* Second Grid - Upload Files */}
           <div className="grid grid-cols-1 gap-6 w-1/5 min-w-[300px]">
             {/* Upload Files Card */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-slate-700">
+            <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Upload Files</h3>
               
               {/* Drag & Drop Area */}
