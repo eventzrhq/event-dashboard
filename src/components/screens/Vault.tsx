@@ -112,13 +112,13 @@ const Vault = () => {
           {/* First Grid - Storage Details, Storage Insights, Studio V 1.1 */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 w-4/5">
             {/* Storage Details Card */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl p-8 border border-gray-200 dark:border-slate-700 col-span-2">
+            <div className="bg-white dark:bg-slate-800 rounded-[12px] p-8 border border-gray-200 dark:border-slate-700 col-span-2">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Storage Details</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Overview of your storage usage</p>
+                  <h3 className="text-lg/[24px] font-semibold text-gray-900 dark:text-white mb-1">Storage Details</h3>
+                
                 </div>
-                <span className="bg-gradient-to-r from-red-100 to-red-200 text-red-800 text-sm font-semibold px-4 py-2 rounded-full dark:from-red-900 dark:to-red-800 dark:text-red-200">
+                <span className="bg-[#DC2626] text-white text-sm font-semibold px-4 py-2 rounded-full dark:from-red-900 dark:to-red-800 dark:text-red-200">
                   Used 77%
                 </span>
               </div>
@@ -231,9 +231,9 @@ const Vault = () => {
                 {storageInsights.map((insight, index) => (
                   <div key={index} className="flex items-start space-x-4 w-full p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors duration-200">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                      insight.color === 'text-red-500' ? 'bg-red-100 dark:bg-red-900' :
-                      insight.color === 'text-yellow-500' ? 'bg-yellow-100 dark:bg-yellow-900' :
-                      'bg-green-100 dark:bg-green-900'
+                      insight.color === 'text-red-500' ? 'bg-[#FF7272] dark:bg-red-900' :
+                      insight.color === 'text-yellow-500' ? 'bg-[#FFD279] dark:bg-yellow-900' :
+                      'bg-[#7CEABC] dark:bg-green-900'
                     }`}>
                       <Icon 
                         name={insight.icon as "storage-used" | "total-files" | "shared-with-me"} 
@@ -253,33 +253,44 @@ const Vault = () => {
             </div>
 
             {/* Studio V 1.1 Card */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl p-6 col-span-3 border border-gray-200 dark:border-slate-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Studio V 1.1</h3>
+            <div className="bg-white dark:bg-slate-800 rounded-xl p-4 col-span-3 border border-blue-200 dark:border-blue-700">
+              {/* Header with Studio logo and version badge */}
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center space-x-3">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">Studio</h3>
+                  <span className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-medium px-2 py-1 rounded-full">
+                    V 1.1
+                  </span>
+                </div>
+              </div>
               
-              <div className="mb-6">
-                <p className="text-blue-600 dark:text-blue-400 font-medium">Hello, Praveen</p>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">Want to try out a few things?</p>
+              {/* Greeting Section */}
+              <div className="text-center mb-8">
+                <p className="text-blue-600 dark:text-blue-400 text-xl/[24px] font-medium mb-1">Hello, Praveen</p>
+                <p className="text-gray-600 dark:text-gray-400 text-xl/[24px] font-medium">Want to try out a few things?</p>
               </div>
 
               {/* Suggestions Section */}
-              <div className="mb-6">
-                <div className="flex items-center justify-between mb-4">
+              <div className="mb-8">
+                <div className="flex items-center justify-between mb-6">
                   <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Try something new</h4>
-                  <button className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                    <Icon name="x" className="w-4 h-4" />
+                  <button className="text-[#9A9B9C] hover:text-gray-600 dark:hover:text-gray-300">
+                  <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.6682 0.999999L14.3414 1.7318C14.6421 2.05874 14.7925 2.22221 14.7395 2.3611C14.6866 2.5 14.474 2.5 14.0487 2.5C13.0967 2.5 11.9578 2.3462 11.0834 2.85498C10.5427 3.16954 10.1662 3.71887 9.52938 4.75M1.25 11.5H2.43561C3.88155 11.5 4.60452 11.5 5.21465 11.145C5.75531 10.8305 6.13178 10.2811 6.76862 9.25" stroke="#141B34" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.6682 13L14.3414 12.2682C14.6421 11.9413 14.7925 11.7778 14.7395 11.6389C14.6866 11.5 14.474 11.5 14.0487 11.5C13.0967 11.5 11.9578 11.6538 11.0834 11.145C10.4732 10.79 10.0722 10.1361 9.27014 8.8282L7.02787 5.1718C6.22581 3.8639 5.82478 3.20995 5.21465 2.85498C4.60452 2.5 3.88155 2.5 2.43561 2.5H1.25" stroke="#141B34" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                   </button>
                 </div>
                 
-                <div className="flex space-x-3 overflow-x-auto pb-2">
+                <div className="grid grid-cols-4 gap-4">
                   {studioSuggestions.map((suggestion, index) => (
-                    <div key={index} className="flex-shrink-0 bg-white dark:bg-slate-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors cursor-pointer border border-gray-200 dark:border-slate-600 min-w-[280px]">
-                      <div className="flex items-center space-x-3">
-                        <div className="text-sm text-gray-700 dark:text-gray-300 font-medium">
-                          {suggestion.title}
-                        </div>
-                        <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-md flex items-center justify-center flex-shrink-0">
-                          <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-                        </div>
+                    <div key={index} className="bg-white dark:bg-slate-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors cursor-pointer border border-gray-200 dark:border-slate-600">
+                      <div className="text-sm text-gray-700 dark:text-gray-300 font-medium mb-3">
+                        {suggestion.title}
+                      </div>
+                      <div className="w-full h-24 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-md flex items-center justify-center">
+                        <div className="w-12 h-12 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
                       </div>
                     </div>
                   ))}
@@ -287,14 +298,14 @@ const Vault = () => {
               </div>
 
               {/* Input Bar */}
-              <div className="flex items-center bg-gray-50 dark:bg-slate-700 rounded-lg p-3">
+              <div className="flex items-center bg-gray-50 dark:bg-slate-700 rounded-lg p-4">
                 <Icon name="plus" className="w-4 h-4 text-gray-400 mr-3" />
                 <input
                   type="text"
                   placeholder="ask Studio for anything"
                   className="flex-1 bg-transparent text-sm text-gray-700 dark:text-gray-300 placeholder-gray-400 focus:outline-none"
                 />
-                <div className="flex items-center space-x-2 ml-3">
+                <div className="flex items-center space-x-3 ml-3">
                   <span className="text-xs text-gray-500 dark:text-gray-400">Studio v 1.0</span>
                   <Icon name="chevron-down" className="w-3 h-3 text-gray-400" />
                   <Icon name="mic" className="w-4 h-4 text-gray-400" />
