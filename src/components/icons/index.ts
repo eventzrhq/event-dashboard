@@ -41,6 +41,9 @@ export { default as JobSearchIcon } from './JobSearchIcon';
 export { default as AiChipIcon } from './AiChipIcon';
 export { default as MagicWandIcon } from './MagicWandIcon';
 export { default as BuildingIcon } from './BuildingIcon';
+export { default as StorageUsedIcon } from './StorageUsedIcon';
+export { default as TotalFilesIcon } from './TotalFilesIcon';
+export { default as SharedWithMeIcon } from './SharedWithMeIcon';
 
 // Unified Icon component
 export { Icon, type IconName } from './Icon';

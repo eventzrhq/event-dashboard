@@ -8,6 +8,33 @@ const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date(2024, 2, 1)); // March 2024
   const [view, setView] = useState("Month");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [miniCalendarWeek, setMiniCalendarWeek] = useState(4); // Week 4 of September
+  const [miniCalendarMonth, setMiniCalendarMonth] = useState(8); // September (0-indexed)
+  const [miniCalendarYear, setMiniCalendarYear] = useState(2025);
+
+  // Generate week dates based on current week and month
+  const getWeekDates = (week: number, month: number, year: number) => {
+    const firstDayOfMonth = new Date(year, month, 1);
+    const firstDayOfWeek = firstDayOfMonth.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    
+    // Calculate the first date of the week
+    const firstDateOfWeek = (week - 1) * 7 - firstDayOfWeek + 1;
+    
+    return Array.from({ length: 7 }, (_, i) => {
+      const date = firstDateOfWeek + i;
+      return {
+        date: date,
+        month: month,
+        year: year,
+        isCurrentMonth: date >= 1 && date <= new Date(year, month + 1, 0).getDate()
+      };
+    });
+  };
+
+  // Get month name
+  const getMonthName = (month: number) => {
+    return monthNames[month];
+  };
 
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
@@ -130,13 +157,13 @@ const Calendar = () => {
               <div className="border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden">
                 {/* Day Headers */}
                 <div className="grid grid-cols-7">
-                  {daysOfWeek.map((day, index) => (
-                    <div key={day} className={`p-3 text-center border-b bg-[#F7F7F7] border-gray-200 dark:border-slate-700 ${index < daysOfWeek.length - 1 ? 'border-r' : ''}`}>
-                      <span className="text-sm text-black font-bold dark:text-gray-400">
-                        {day}
-                      </span>
-                    </div>
-                  ))}
+                {daysOfWeek.map((day, index) => (
+                  <div key={day} className={`p-3 text-center border-b bg-[#F7F7F7] border-gray-200 dark:border-slate-700 ${index < daysOfWeek.length - 1 ? 'border-r' : ''}`}>
+                    <span className="text-sm text-black font-bold dark:text-gray-400">
+                      {day}
+                    </span>
+                  </div>
+                ))}
                 </div>
 
                 {/* Calendar Weeks */}
@@ -150,27 +177,27 @@ const Calendar = () => {
                       <div className="grid grid-cols-7">
                         {weekDays.map((day, dayIndex) => {
                           const globalIndex = weekIndex * 7 + dayIndex;
-                          const isToday = day === new Date().getDate() && 
-                            currentDate.getMonth() === new Date().getMonth() && 
-                            currentDate.getFullYear() === new Date().getFullYear();
+                  const isToday = day === new Date().getDate() && 
+                    currentDate.getMonth() === new Date().getMonth() && 
+                    currentDate.getFullYear() === new Date().getFullYear();
 
-                          return (
-                            <div
+                  return (
+                    <div
                               key={globalIndex}
                               className={`min-h-[100px] p-2 border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer relative ${
-                                day ? "bg-white dark:bg-slate-800" : "bg-gray-50 dark:bg-slate-900"
+                        day ? "bg-white dark:bg-slate-800" : "bg-gray-50 dark:bg-slate-900"
                               } ${dayIndex < 6 ? 'border-r' : ''} ${weekIndex < Math.ceil(days.length / 7) - 1 ? 'border-b' : ''}`}
-                            >
-                              {day && (
+                    >
+                      {day && (
                                 <div className="flex items-center justify-start mb-2">
-                                  <span className={`text-sm font-medium ${
-                                    isToday 
-                                      ? "w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center" 
-                                      : "text-gray-900 dark:text-white"
-                                  }`}>
-                                    {day}
-                                  </span>
-                                </div>
+                            <span className={`text-sm font-medium ${
+                              isToday 
+                                ? "w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center" 
+                                : "text-gray-900 dark:text-white"
+                            }`}>
+                              {day}
+                            </span>
+                          </div>
                               )}
                             </div>
                           );
@@ -208,9 +235,9 @@ const Calendar = () => {
                                 }
                                 return null;
                               })}
-                            </div>
-                          ))}
-                        </div>
+                              </div>
+                            ))}
+                          </div>
                       </div>
                     </div>
                   );
@@ -258,12 +285,13 @@ const Calendar = () => {
         </div>
       </div>
 
-      {/* Create Appointment Drawer - Integrated between header and footer */}
-      {isDrawerOpen && (
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-200 dark:border-slate-700 shadow-sm mb-6">
-          <div className="flex flex-col">
+      {/* Create Appointment Drawer - Slides from right, positioned at bottom */}
+      <div className={`fixed bottom-20 right-0 w-96 h-[calc(100vh-155px)] bg-white dark:bg-slate-800 shadow-2xl border-l border-gray-200 dark:border-slate-700 transform transition-transform duration-300 ease-in-out z-40 ${
+        isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
+      }`}>
+          <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Create Appointment</h2>
               <button
                 onClick={() => setIsDrawerOpen(false)}
@@ -274,120 +302,167 @@ const Calendar = () => {
             </div>
 
             {/* Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Left Column - Form */}
-              <div className="space-y-6">
-                <form className="space-y-6">
-                  {/* Title */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Title*
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Meeting with client"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
-                    />
-                  </div>
+            <div className="flex-1 overflow-y-auto p-6">
+              <form className="space-y-6">
+                {/* Title */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Title*
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Meeting with client"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  />
+                </div>
 
-                  {/* Category */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Category*
-                    </label>
-                    <select className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white">
-                      <option value="">Select category</option>
-                      <option value="meeting">Meeting</option>
-                      <option value="conference">Conference</option>
-                      <option value="seminar">Seminar</option>
-                      <option value="workshop">Workshop</option>
-                    </select>
-                  </div>
+                {/* Category */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Category*
+                  </label>
+                  <select className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white">
+                    <option value="">Select category</option>
+                    <option value="meeting">Meeting</option>
+                    <option value="conference">Conference</option>
+                    <option value="seminar">Seminar</option>
+                    <option value="workshop">Workshop</option>
+                  </select>
+                </div>
 
-                  {/* Time */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Time*
-                    </label>
-                    <input
-                      type="time"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
-                    />
-                  </div>
-
-                  {/* Location */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Location*
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Conference Room, Zoom Etc."
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
-                    />
-                  </div>
-
-                  {/* Description */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Description*
-                    </label>
-                    <textarea
-                      rows={4}
-                      placeholder="More about appointment"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
-                    />
-                  </div>
-                </form>
-              </div>
-
-              {/* Right Column - Date Picker */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Date*
-                </label>
-                
-                {/* Mini Calendar Widget */}
-                <div className="border-2 border-blue-400 rounded-lg p-4 bg-gray-50 dark:bg-slate-700">
-                  {/* Calendar Header */}
-                  <div className="flex items-center justify-between mb-4">
-                    <button className="p-1 hover:bg-gray-200 dark:hover:bg-slate-600 rounded">
-                      <Icon name="chevron-left" className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                    </button>
-                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white">September 2025</h3>
-                    <button className="p-1 hover:bg-gray-200 dark:hover:bg-slate-600 rounded">
-                      <Icon name="chevron-right" className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                    </button>
-                  </div>
+                {/* Date */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Date*
+                  </label>
                   
-                  {/* Calendar Days Header */}
-                  <div className="grid grid-cols-7 gap-1 mb-2">
-                    {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
-                      <div key={index} className="text-center text-xs font-medium text-gray-500 dark:text-gray-400 py-1">
-                        {day}
-                      </div>
-                    ))}
-                  </div>
-                  
-                  {/* Calendar Days */}
-                  <div className="grid grid-cols-7 gap-1">
-                    {[24, 25, 26, 27, 28, 29, 30].map((date, index) => (
-                      <button
-                        key={index}
-                        className={`text-center text-sm py-2 rounded-full hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors ${
-                          date === 25 ? 'bg-black text-white' : 'text-gray-700 dark:text-gray-300'
-                        }`}
+                  {/* Mini Calendar Widget */}
+                  <div className="border-2 border-blue-400 rounded-lg p-4 bg-gray-50 dark:bg-slate-700">
+                    {/* Calendar Header */}
+                    <div className="flex items-center justify-between mb-4">
+                      <button 
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (miniCalendarWeek > 1) {
+                            setMiniCalendarWeek(prev => prev - 1);
+                          } else {
+                            // Go to previous month
+                            if (miniCalendarMonth > 0) {
+                              setMiniCalendarMonth(prev => prev - 1);
+                              setMiniCalendarWeek(6); // Last week of previous month
+                            } else {
+                              setMiniCalendarMonth(11); // December
+                              setMiniCalendarYear(prev => prev - 1);
+                              setMiniCalendarWeek(6);
+                            }
+                          }
+                        }}
+                        className="p-1 hover:bg-gray-200 dark:hover:bg-slate-600 rounded"
                       >
-                        {date}
+                        <Icon name="chevron-left" className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                       </button>
-                    ))}
+                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Week {miniCalendarWeek}, {getMonthName(miniCalendarMonth)} {miniCalendarYear}</h3>
+                      <button 
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (miniCalendarWeek < 6) {
+                            setMiniCalendarWeek(prev => prev + 1);
+                          } else {
+                            // Go to next month
+                            if (miniCalendarMonth < 11) {
+                              setMiniCalendarMonth(prev => prev + 1);
+                              setMiniCalendarWeek(1); // First week of next month
+                            } else {
+                              setMiniCalendarMonth(0); // January
+                              setMiniCalendarYear(prev => prev + 1);
+                              setMiniCalendarWeek(1);
+                            }
+                          }
+                        }}
+                        className="p-1 hover:bg-gray-200 dark:hover:bg-slate-600 rounded"
+                      >
+                        <Icon name="chevron-right" className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                      </button>
+                    </div>
+                    
+                    {/* Calendar Days Header */}
+                    <div className="grid grid-cols-7 gap-1 mb-2">
+                      {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+                        <div key={index} className="text-center text-xs font-medium text-gray-500 dark:text-gray-400 py-1">
+                          {day}
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Calendar Days */}
+                    <div className="grid grid-cols-7 gap-1">
+                      {getWeekDates(miniCalendarWeek, miniCalendarMonth, miniCalendarYear).map((dayData, index) => (
+                        <button
+                          key={index}
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log(`Date ${dayData.date} clicked (${getMonthName(dayData.month)} ${dayData.year})`);
+                          }}
+                          className={`text-center text-sm py-2 rounded-full hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors ${
+                            dayData.date === 25 && dayData.month === 8 && dayData.year === 2025 
+                              ? 'bg-black text-white' 
+                              : dayData.isCurrentMonth 
+                                ? 'text-gray-700 dark:text-gray-300' 
+                                : 'text-gray-400 dark:text-gray-500'
+                          }`}
+                        >
+                          {dayData.date}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
+
+                {/* Time */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Time*
+                  </label>
+                  <input
+                    type="time"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  />
+                </div>
+
+                {/* Location */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Location*
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Conference Room, Zoom Etc."
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  />
+                </div>
+
+                {/* Description */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Description*
+                  </label>
+                  <textarea
+                    rows={4}
+                    placeholder="More about appointment"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  />
+                </div>
+              </form>
             </div>
 
             {/* Footer */}
-            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-slate-700">
+            <div className="p-6 border-t border-gray-200 dark:border-slate-700">
               <div className="flex space-x-3">
                 <button
                   onClick={() => setIsDrawerOpen(false)}
@@ -401,11 +476,10 @@ const Calendar = () => {
                 >
                   Save Appointment
                 </Button>
-              </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

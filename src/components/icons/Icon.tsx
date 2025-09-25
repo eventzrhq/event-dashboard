@@ -42,6 +42,9 @@ import {
   AiChipIcon,
   MagicWandIcon,
   BuildingIcon,
+  StorageUsedIcon,
+  TotalFilesIcon,
+  SharedWithMeIcon,
 } from "./index";
 
 export type IconName =
@@ -104,7 +107,18 @@ export type IconName =
   | "x"
   | "chart"
   | "chevron-up"
-  | "camera";
+  | "camera"
+  | "storage-used"
+  | "total-files"
+  | "shared-with-me"
+  | "google-drive"
+  | "dropbox"
+  | "refresh"
+  | "arrow-right"
+  | "image"
+  | "video"
+  | "audio"
+  | "documents";
 
 interface IconProps {
   name: IconName;
@@ -467,6 +481,90 @@ export const Icon = ({ name, className }: IconProps) => {
             strokeWidth={2}
             d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
           />
+        </svg>
+      );
+    case "storage-used":
+      return <StorageUsedIcon className={className} />;
+    case "total-files":
+      return <TotalFilesIcon className={className} />;
+    case "shared-with-me":
+      return <SharedWithMeIcon className={className} />;
+    case "google-drive":
+      return (
+        <svg className={className} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="20" height="20" rx="10" fill="black"/>
+          <path d="M12.4979 11.8906L14.1796 14.9368C14.1161 14.9791 14.0103 15.0002 13.8623 15.0002H6.00578C5.87886 15.0002 5.77309 14.9791 5.68848 14.9368L7.43366 11.9224" fill="#2684FC"/>
+          <path d="M12.4346 11.8906L14.1798 14.9368C14.3067 14.8733 14.4124 14.7675 14.4971 14.6195L15.8615 12.2079C15.9038 12.081 15.9249 11.9752 15.9249 11.8906" fill="#EA4335"/>
+          <path d="M7.40586 11.9752L3.92697 11.9086C3.92206 11.8325 3.95662 11.7303 4.03066 11.602L7.95891 4.79812C8.02237 4.6882 8.09357 4.60718 8.17252 4.55506L9.91048 7.57363" fill="#00AC47"/>
+          <path d="M7.4375 11.918L3.92688 11.9063C3.91838 12.0479 3.95709 12.1924 4.04302 12.3397L5.44925 14.7271C5.53802 14.8272 5.61904 14.8984 5.69232 14.9407" fill="#0066DA"/>
+          <path d="M9.87949 7.52478L11.6767 4.5453C11.745 4.5791 11.8162 4.66012 11.8903 4.78836L15.8185 11.5923C15.882 11.7022 15.9165 11.8044 15.9222 11.8988L12.4391 11.8946" fill="#FFBA00"/>
+          <path d="M9.91113 7.57812L11.6766 4.54369C11.5582 4.4655 11.4137 4.42679 11.2431 4.42754L8.47248 4.45169C8.34141 4.47851 8.23923 4.51307 8.16595 4.55538" fill="#00832D"/>
+        </svg>
+      );
+    case "dropbox":
+      return (
+        <svg className={className} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="20" height="20" rx="10" fill="#0061FF"/>
+          <g clipPath="url(#clip0_724_19756)">
+            <path d="M6.99975 4.89062L4 6.80178L6.99975 8.71293L10 6.80178L6.99975 4.89062Z" fill="white"/>
+            <path d="M13 4.89062L10 6.80195L13 8.71328L16 6.80195L13 4.89062Z" fill="white"/>
+            <path d="M4 10.6221L6.99975 12.5332L10 10.6221L6.99975 8.71094L4 10.6221Z" fill="white"/>
+            <path d="M13 8.71094L10 10.6223L13 12.5336L16 10.6223L13 8.71094Z" fill="white"/>
+            <path d="M7 13.1768L10.0003 15.0879L13 13.1768L10.0003 11.2656L7 13.1768Z" fill="white"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_724_19756">
+              <rect width="12" height="12" fill="white" transform="translate(4 4)"/>
+            </clipPath>
+          </defs>
+        </svg>
+      );
+    case "refresh":
+      return (
+        <svg className={className} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.5007 1.66797L13.0708 3.47149C12.1377 3.04335 11.0975 2.80433 10.0007 2.80433C5.97357 2.80433 2.70898 6.02652 2.70898 10.0013C2.70898 11.3911 3.10813 12.689 3.79945 13.7892M7.50065 18.3346L6.93048 16.5311C7.86361 16.9593 8.90385 17.1983 10.0007 17.1983C14.0277 17.1983 17.2923 13.9761 17.2923 10.0013C17.2923 8.61147 16.8932 7.31365 16.2019 6.21342" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round"/>
+        </svg>
+      );
+    case "arrow-right":
+      return (
+        <svg className={className} width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.8327 4L1.16602 4" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M8.50003 7.33073C8.50003 7.33073 11.8333 4.87577 11.8333 3.99737C11.8333 3.11897 8.5 0.664062 8.5 0.664062" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      );
+    case "image":
+      return (
+        <svg className={className} width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.666992 6.9974C0.666992 4.01183 0.666992 2.51905 1.59449 1.59156C2.52198 0.664062 4.01476 0.664062 7.00033 0.664062C9.98589 0.664062 11.4787 0.664062 12.4062 1.59156C13.3337 2.51905 13.3337 4.01183 13.3337 6.9974C13.3337 9.98296 13.3337 11.4757 12.4062 12.4032C11.4787 13.3307 9.98589 13.3307 7.00033 13.3307C4.01476 13.3307 2.52198 13.3307 1.59449 12.4032C0.666992 11.4757 0.666992 9.98296 0.666992 6.9974Z" stroke="currentColor"/>
+          <circle cx="10" cy="4" r="1" stroke="currentColor"/>
+          <path d="M9.66667 13.6654C9.25365 12.1819 8.28965 10.8535 6.91769 9.88816C5.43841 8.84733 3.58109 8.29645 1.67713 8.33381C1.45105 8.33329 1.22517 8.3405 1 8.35541" stroke="currentColor" strokeLinejoin="round"/>
+          <path d="M7.66699 10.9974C8.80134 10.113 10.0233 9.65923 11.2578 9.6641C11.9578 9.66338 12.6545 9.81182 13.3337 10.1052" stroke="currentColor" strokeLinejoin="round"/>
+        </svg>
+      );
+    case "video":
+      return (
+        <svg className={className} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.33398 7.33073C1.33398 5.13084 1.33398 4.0309 2.0174 3.34748C2.70082 2.66406 3.80076 2.66406 6.00065 2.66406H6.66732C8.86721 2.66406 9.96715 2.66406 10.6506 3.34748C11.334 4.0309 11.334 5.13084 11.334 7.33073V8.66406C11.334 10.864 11.334 11.9639 10.6506 12.6473C9.96715 13.3307 8.86721 13.3307 6.66732 13.3307H6.00065C3.80076 13.3307 2.70082 13.3307 2.0174 12.6473C1.33398 11.9639 1.33398 10.864 1.33398 8.66406V7.33073Z" stroke="currentColor"/>
+          <path d="M11.334 5.93593L11.4179 5.86667C12.8284 4.70285 13.5337 4.12094 14.1005 4.40191C14.6673 4.68289 14.6673 5.6144 14.6673 7.47742V8.51998C14.6673 10.383 14.6673 11.3145 14.1005 11.5955C13.5337 11.8765 12.8284 11.2945 11.4179 10.1307L11.334 10.0615" stroke="currentColor" strokeLinecap="round"/>
+          <circle cx="7.66699" cy="6.33203" r="1" stroke="currentColor"/>
+        </svg>
+      );
+    case "audio":
+      return (
+        <svg className={className} width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="3.33333" cy="12.3333" r="2.33333" stroke="currentColor"/>
+          <circle cx="11" cy="10.668" r="2" stroke="currentColor"/>
+          <path d="M5.66699 12.3359L5.66699 4.66927C5.66699 4.05364 5.66699 3.74582 5.84263 3.55457C6.01826 3.36331 6.3453 3.33541 6.99938 3.2796C9.68163 3.05075 11.6063 2.17597 12.5705 1.60912C12.7676 1.49327 12.8661 1.43535 12.9332 1.47375C13.0003 1.51215 13.0003 1.62361 13.0003 1.84651V10.6693" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M5.66699 6.66797C9.5781 6.66797 12.1855 5.11241 13.0003 4.66797" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      );
+    case "documents":
+      return (
+        <svg className={className} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 7.33594V6.66927C14 4.15511 14 2.89803 13.173 2.11699C12.346 1.33594 11.015 1.33594 8.35294 1.33594L7.64706 1.33594C4.98501 1.33594 3.65399 1.33594 2.82699 2.11699C2 2.89803 2 4.15511 2 6.66927L2 9.33594C2 11.8501 2 13.1072 2.82699 13.8882C3.65399 14.6693 4.98501 14.6693 7.64706 14.6693H8" stroke="currentColor" strokeLinecap="round"/>
+          <path d="M5.33398 4.66797H10.6673" stroke="currentColor" strokeLinecap="round"/>
+          <path d="M5.33398 8H8.66732" stroke="currentColor" strokeLinecap="round"/>
+          <path d="M14 13.7673L14 11.3359C14 10.383 13.1046 9.33594 12 9.33594C10.8954 9.33594 10 10.383 10 11.3359L10 13.6693C10 14.1891 10.4884 14.6693 11.0909 14.6693C11.6934 14.6693 12.1818 14.1891 12.1818 13.6693L12.1818 11.8457" stroke="currentColor" strokeLinecap="round"/>
         </svg>
       );
     default:
