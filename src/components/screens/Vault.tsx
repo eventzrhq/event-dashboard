@@ -224,20 +224,20 @@ const Vault = () => {
             <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700 col-span-1">
               <div className="mb-6">
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Storage Insights</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Quick overview</p>
+            
               </div>
               
               <div className="space-y-4">
                 {storageInsights.map((insight, index) => (
                   <div key={index} className="flex items-start space-x-4 w-full p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors duration-200">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                      insight.color === 'text-red-500' ? 'bg-[#FF7272] dark:bg-red-900' :
-                      insight.color === 'text-yellow-500' ? 'bg-[#FFD279] dark:bg-yellow-900' :
+                      index === 0 ? 'bg-[#FF7272] dark:bg-red-900' :
+                      index === 1 ? 'bg-[#FFD279] dark:bg-yellow-900' :
                       'bg-[#7CEABC] dark:bg-green-900'
                     }`}>
                       <Icon 
                         name={insight.icon as "storage-used" | "total-files" | "shared-with-me"} 
-                        className={`w-6 h-6 ${insight.color}`} 
+                        className="w-6 h-6 text-black dark:text-white" 
                       />
                       </div>
                       <div className="flex-1">
@@ -271,7 +271,7 @@ const Vault = () => {
               </div>
 
               {/* Suggestions Section */}
-              <div className="mb-8">
+              <div className="mb-8 px-[58px]">
                 <div className="flex items-center justify-between mb-6">
                   <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Try something new</h4>
                   <button className="text-[#9A9B9C] hover:text-gray-600 dark:hover:text-gray-300">
