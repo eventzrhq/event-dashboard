@@ -8,9 +8,9 @@ export const GridIcon = ({ className = "w-4 h-4" }: GridIconProps) => {
       width="16"
       height="16"
       viewBox="0 0 16 16"
-      
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <g clip-path="url(#clip0_724_23575)">
         <path
@@ -22,7 +22,7 @@ export const GridIcon = ({ className = "w-4 h-4" }: GridIconProps) => {
           stroke="currentColor"
         />
         <path
-          d="M14.6673 4.0013C14.6673 2.52854 13.4734 1.33464 12.0007 1.33464C10.5279 1.33464 9.33398 2.52854 9.33398 4.0013C9.33398 5.47406 10.5279 6.66797 12.0007 6.66797C13.4734 6.66797 14.6673 5.47406 14.6673 4.0013Z"
+        d="M14.6673 4.0013C14.6673 2.52854 13.4734 1.33464 12.0007 1.33464C10.5279 1.33464 9.33398 2.52854 9.33398 4.0013C9.33398 5.47406 10.5279 6.66797 12.0007 6.66797C13.4734 6.66797 14.6673 5.47406 14.6673 4.0013Z"
           stroke="currentColor"
         />
         <path

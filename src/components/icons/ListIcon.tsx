@@ -10,6 +10,7 @@ export const ListIcon = ({ className = "w-4 h-4" }: ListIconProps) => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path d="M6 3.33203L14 3.33203" stroke="currentColor" stroke-linecap="round" />
       <path
