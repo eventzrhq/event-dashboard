@@ -3,6 +3,8 @@
 import React, { useState, useRef, useCallback } from "react";
 import { Button } from "../ui/button";
 import { Icon } from "../icons";
+import { GridIcon } from "../icons/GridIcon";
+import { ListIcon } from "../icons/ListIcon";
 import { ResponsivePie } from "@nivo/pie";
 
 interface UploadFile {
@@ -20,7 +22,7 @@ const Vault = () => {
   const [uploadFiles, setUploadFiles] = useState<UploadFile[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const [savedFiles, setSavedFiles] = useState<{[key: string]: Array<{id: string, name: string, type: string, size: string, date: string}>}>({
     'All Files': [],
     'Images': [],
@@ -362,34 +364,33 @@ const Vault = () => {
               ))}
             </div>
 
-            {/* View Mode Toggle - Only show when Images is selected */}
-            {selectedCategory === 'Images' && (
-              <div className="flex items-center space-x-1 bg-white rounded-lg p-1 border border-gray-200">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-md transition-colors ${
-                    viewMode === 'grid' 
-                      ? 'bg-blue-100 text-blue-600' 
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
-                >
-                    <Icon name="plus" className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`p-2 rounded-md transition-colors ${
-                    viewMode === 'list' 
-                      ? 'bg-blue-100 text-blue-600' 
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
-                >
-                    <Icon name="chevron-down" className="w-4 h-4" />
-                </button>
-              </div>
-            )}
-
-            {/* Import Options, Refresh, and Buy More Storage */}
+            {/* Import Options, View Toggle, Refresh, and Buy More Storage */}
             <div className="flex items-center space-x-1 sm:space-x-2 flex-wrap gap-1 sm:gap-2 w-full md:w-auto justify-start md:justify-end">
+                  {/* View Mode Toggle - Show for all categories except All Files */}
+                  {selectedCategory !== 'All Files' && (
+                   <div className="flex items-center bg-white rounded-full p-1 border border-gray-200">
+                     <button
+                       onClick={() => setViewMode('list')}
+                       className={`p-2 rounded-full transition-colors cursor-pointer ${
+                         viewMode === 'list' 
+                           ? 'bg-[#EFF4FF] text-blue-600' 
+                           : 'text-gray-500 hover:text-gray-700'
+                       }`}
+                     >
+                       <ListIcon className="w-4 h-4" />
+                     </button>
+                     <button
+                       onClick={() => setViewMode('grid')}
+                       className={`p-2 rounded-full transition-colors cursor-pointer ${
+                         viewMode === 'grid' 
+                           ? 'bg-[#EFF4FF] text-blue-600' 
+                           : 'text-gray-500 hover:text-gray-700'
+                       }`}
+                     >
+                       <GridIcon className="w-4 h-4" />
+                     </button>
+                   </div>
+                 )}
               {/* Import Options */}
               <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors bg-white">
                 <span
@@ -411,6 +412,8 @@ const Vault = () => {
                   ))}
                 </div>
               </div>
+
+             
 
               {/* Refresh Button */}
               <button className="flex items-center space-x-1 sm:space-x-2 p-2 sm:p-[10px] rounded-full text-sm bg-white text-black hover:bg-gray-50">
@@ -712,14 +715,17 @@ const Vault = () => {
                 {/* File Grid/List */}
               {(savedFiles[selectedCategory]?.length > 0 || sampleFiles[selectedCategory as keyof typeof sampleFiles]?.length > 0) ? (
                 <>
-                  {selectedCategory === 'Images' && viewMode === 'grid' ? (
-                    /* Images Grid View */
+                  {viewMode === 'grid' ? (
+                    /* Grid View for all categories */
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
                       {(savedFiles[selectedCategory]?.length > 0 ? savedFiles[selectedCategory] : sampleFiles[selectedCategory as keyof typeof sampleFiles])?.map((file) => (
                       <div key={file.id} className="group cursor-pointer">
                         <div className="relative aspect-square bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden mb-2">
                           <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 flex items-center justify-center">
-                            <Icon name="image" className="w-8 h-8 text-gray-400" />
+                            <Icon 
+                              name={file.type as "documents" | "image" | "video" | "audio" | "ai-chip"} 
+                              className="w-8 h-8 text-gray-400" 
+                            />
                           </div>
                           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
                             <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-white rounded-full p-2 shadow-lg">
