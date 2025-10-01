@@ -5,7 +5,8 @@ import { Button } from "../ui/button";
 import { Icon } from "../icons";
 import { GridIcon } from "../icons/GridIcon";
 import { ListIcon } from "../icons/ListIcon";
-import { ResponsivePie } from "@nivo/pie";
+// @ts-expect-error - react-gauge-chart doesn't have TypeScript definitions
+import GaugeChart from "react-gauge-chart";
 
 interface UploadFile {
   id: string;
@@ -17,12 +18,37 @@ interface UploadFile {
   error?: string;
 }
 
+interface ChatMessage {
+  id: string;
+  type: 'user' | 'ai';
+  content: string;
+  timestamp: Date;
+  showImages?: boolean;
+}
+
+// Random AI responses
+const aiResponses = [
+  "I've created some beautiful designs for you! Check out these options and let me know which one you prefer.",
+  "Here are some amazing results based on your request! I've generated multiple variations for you to choose from.",
+  "Great idea! I've prepared several design concepts that match your vision. Take a look!",
+  "I've curated these stunning options for you. Each one has a unique style - let me know what you think!",
+  "Here are some creative interpretations of your request. Feel free to ask for modifications!",
+  "I've generated these personalized results just for you! Which style catches your eye?",
+  "Perfect! Here are some design variations that should work well for your needs.",
+  "I've put together these options based on your requirements. Let me know if you'd like any adjustments!"
+];
+
 const Vault = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Files");
   const [uploadFiles, setUploadFiles] = useState<UploadFile[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
+  const [aiQuery, setAiQuery] = useState("");
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
   const [savedFiles, setSavedFiles] = useState<{[key: string]: Array<{id: string, name: string, type: string, size: string, date: string}>}>({
     'All Files': [],
     'Images': [],
@@ -36,10 +62,10 @@ const Vault = () => {
   // Sample data for different categories
   const sampleFiles = {
     'All Files': [
-      { id: '1', name: 'Project Report.pdf', type: 'documents', size: '2.4 MB', date: '05.10.2025 10:49 AM' },
-      { id: '2', name: 'Vacation Photo.jpg', type: 'image', size: '1.8 MB', date: '04.10.2025 15:30 PM' },
-      { id: '3', name: 'Meeting Recording.mp4', type: 'video', size: '45.2 MB', date: '03.10.2025 09:15 AM' },
-      { id: '4', name: 'Podcast Episode.mp3', type: 'audio', size: '12.7 MB', date: '02.10.2025 14:22 PM' },
+  { id: '1', name: 'Project Report.pdf', type: 'documents', size: '2.4 MB', date: '05.10.2025 10:49 AM' },
+  { id: '2', name: 'Vacation Photo.jpg', type: 'image', size: '1.8 MB', date: '04.10.2025 15:30 PM' },
+  { id: '3', name: 'Meeting Recording.mp4', type: 'video', size: '45.2 MB', date: '03.10.2025 09:15 AM' },
+  { id: '4', name: 'Podcast Episode.mp3', type: 'audio', size: '12.7 MB', date: '02.10.2025 14:22 PM' },
       { id: '5', name: 'AI Generated Art.png', type: 'ai', size: '3.1 MB', date: '01.10.2025 11:45 AM' }
     ],
     'Images': [
@@ -181,7 +207,7 @@ const Vault = () => {
   }, []);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
+      e.preventDefault();
     setIsDragOver(false);
     console.log('Files dropped:', e.dataTransfer.files);
     handleFileSelect(e.dataTransfer.files);
@@ -291,11 +317,32 @@ const Vault = () => {
     { id: "Documents", value: 0.1, color: "#FF7272" },
   ];
 
+  // Calculate total storage used
+  const totalStorageUsed = storageBreakdown.reduce((sum, item) => sum + item.value, 0);
+  const storagePercentage = Math.round((totalStorageUsed / 10) * 100); // Assuming 10GB total capacity
+  const storagePercent = totalStorageUsed / 10; // Decimal value for gauge chart (0.76 for 76%)
+
   const studioSuggestions = [
-    { title: "Plan my weekend getaway", image: "motorcycle-mountain" },
-    { title: "Suggest trending concerts nearby", image: "concert-stage" },
-    { title: "Create my personalized tour plan", image: "plane-city" },
-    { title: "Show top foodie destinations", image: "food-plate" },
+    { 
+      title: "Statue of Liberty", 
+      description: "New York, USA",
+      gradient: "from-cyan-400 via-blue-400 to-blue-500"
+    },
+    { 
+      title: "Taj Mahal", 
+      description: "Agra, India",
+      gradient: "from-teal-400 via-cyan-400 to-blue-400"
+    },
+    { 
+      title: "Eiffel Tower", 
+      description: "Paris, France",
+      gradient: "from-purple-400 via-pink-400 to-red-400"
+    },
+    { 
+      title: "Great Wall", 
+      description: "Beijing, China",
+      gradient: "from-orange-400 via-amber-400 to-yellow-400"
+    },
   ];
 
   const storageInsights = [
@@ -321,6 +368,58 @@ const Vault = () => {
       color: "text-green-500",
     },
   ];
+
+  // Generate random AI response
+  const generateAIResponse = useCallback(() => {
+    const randomIndex = Math.floor(Math.random() * aiResponses.length);
+    return aiResponses[randomIndex];
+  }, []);
+
+  // Handle sending chat message
+  const handleSendMessage = useCallback(() => {
+    if (!aiQuery.trim()) return;
+
+    // Add user message
+    const userMessage: ChatMessage = {
+      id: Date.now().toString(),
+      type: 'user',
+      content: aiQuery,
+      timestamp: new Date(),
+      showImages: false
+    };
+
+    setChatMessages(prev => [...prev, userMessage]);
+    setAiQuery("");
+    setIsTyping(true);
+
+    // Simulate AI typing and response
+    setTimeout(() => {
+      const aiMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        type: 'ai',
+        content: generateAIResponse(),
+        timestamp: new Date(),
+        showImages: true
+      };
+
+      setChatMessages(prev => [...prev, aiMessage]);
+      setIsTyping(false);
+      setSelectedImageIndex(0);
+    }, 1500 + Math.random() * 1000); // Random delay between 1.5-2.5 seconds
+  }, [aiQuery, generateAIResponse]);
+
+  // Handle Enter key press
+  const handleKeyPress = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  }, [handleSendMessage]);
+
+  // Scroll to bottom when new messages arrive
+  React.useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chatMessages, isTyping]);
 
   return (
     <div className="h-full overflow-y-auto bg-gray-50 dark:bg-slate-900 p-6">
@@ -445,85 +544,39 @@ const Vault = () => {
                   </h3>
                 </div>
                 <span className="bg-[#DC2626] text-white text-xs sm:text-sm font-semibold px-2 sm:px-4 py-1 sm:py-2 rounded-full dark:from-red-900 dark:to-red-800 dark:text-red-200">
-                  Used 77%
+                  Used {storagePercentage}%
                 </span>
               </div>
 
-              {/* Grid Layout: Pie Chart on left, Legend on right */}
+              {/* Grid Layout: Gauge Chart on left, Legend on right */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-                {/* Left side - Pie Chart */}
-                <div className="flex flex-col items-center">
-                  <div className="h-72 w-full -mt-14 ml-15 rotate-[95deg] relative">
-                    <ResponsivePie
-                      data={storageBreakdown}
-                      margin={{ top: 60, right: 60, bottom: 60, left: 60 }}
-                      innerRadius={0.7}
-                      padAngle={0}
-                      cornerRadius={0}
-                      activeOuterRadiusOffset={8}
-                      borderWidth={1}
-                      borderColor={{
-                      from: 'color',
-                      modifiers: [['darker', 0.2]]
-                      }}
-                      enableArcLinkLabels={false}
-                      enableArcLabels={false}
-                      isInteractive={false}
-                      arcLinkLabelsSkipAngle={10}
-                      arcLinkLabelsTextColor="#333333"
-                      arcLinkLabelsThickness={2}
-                    arcLinkLabelsColor={{ from: 'color' }}
-                      arcLabelsSkipAngle={10}
-                      arcLabelsTextColor={{
-                      from: 'color',
-                      modifiers: [['darker', 2]]
-                      }}
-                    colors={{ datum: 'data.color' }}
-                      startAngle={175}
-                      endAngle={355}
-                      tooltip={({ datum }) => (
-                        <div className="bg-white dark:bg-slate-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-                          <div className="flex items-center space-x-2">
-                            <div
-                              className="w-3 h-3 rounded-full"
-                              style={{ backgroundColor: datum.color }}
-                            ></div>
-                            <span className="font-medium text-gray-900 dark:text-white">
-                              {datum.id}: {datum.value} GB
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                      theme={{
-                      background: 'transparent',
-                        text: {
-                          fontSize: 12,
-                        fill: '#6b7280',
-                        fontFamily: 'inherit'
-                        },
-                        tooltip: {
-                          container: {
-                          background: 'transparent',
-                          color: 'inherit',
-                            fontSize: 12,
-                            borderRadius: 6,
-                          boxShadow: '0 3px 9px rgba(0, 0, 0, 0.5)',
-                          border: '1px solid #e5e7eb'
-                        }
-                      }
-                      }}
+                {/* Left side - Gauge Chart */}
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-full max-w-lg mx-auto">
+                    <GaugeChart
+                      id="storage-gauge-chart"
+                      nrOfLevels={storageBreakdown.length}
+                      colors={storageBreakdown.map(item => item.color)}
+                      arcWidth={0.2}
+                      percent={storagePercent}
+                      textColor="#000000"
+                      hideText={true}
+                      formatTextValue={(value: string) => `${value}%`}
+                      needleColor="#374151"
+                      needleBaseColor="#374151"
+                      arcPadding={0.0}
                     />
                   </div>
 
                   {/* Storage info */}
-                  <div className="flex justify-between text-sm text-gray-600 pl-5 divi  pr-13 dark:text-gray-400 w-full -mt-23">
-                    <div className="text-center border-r-2 pr-19 border-gray-200 dark:border-gray-700">
-                      <div className="text-lg font-bold text-gray-900 dark:text-white">15 GB</div>
+                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 w-full mt-4 px-4">
+                    <div className="text-center border-r-2 pr-8 border-gray-200 dark:border-gray-700">
+                      <div className="text-lg font-bold text-gray-900 dark:text-white">10 GB</div>
                       <div className="text-xs">Total Space</div>
                     </div>
                     <div className="text-center">
                       <div className="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white">
-                        13 GB
+                        {totalStorageUsed.toFixed(1)} GB
                       </div>
                       <div className="text-xs">Used Space</div>
                     </div>
@@ -548,12 +601,12 @@ const Vault = () => {
                       </div>
                       <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
                         {item.value} GB
-                      </span>
+            </span>
                     </div>
                   ))}
-                </div>
-              </div>
-            </div>
+          </div>
+        </div>
+      </div>
 
             {/* Storage Insights Card */}
             <div className="bg-white dark:bg-slate-800 rounded-xl p-3 sm:p-4 md:p-6 border border-gray-200 dark:border-slate-700 col-span-1">
@@ -606,10 +659,10 @@ const Vault = () => {
               </div>
             </div>
 
-            {/* Studio V 1.1 Card */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl p-3 sm:p-4 col-span-1 sm:col-span-2 lg:col-span-3 border border-blue-200 dark:border-blue-700">
+            {/* Studio V 1.1 Card - AI Chat Interface */}
+            <div className="bg-white dark:bg-slate-800 rounded-xl p-3 sm:p-4 col-span-1 sm:col-span-2 lg:col-span-3 border border-blue-200 dark:border-blue-700 flex flex-col" style={{ minHeight: '600px' }}>
               {/* Header with Studio logo and version badge */}
-              <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div className="flex items-center space-x-2 sm:space-x-3">
                   <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                     Studio
@@ -618,82 +671,190 @@ const Vault = () => {
                     V 1.1
                   </span>
                 </div>
-              </div>
-
-              {/* Greeting Section */}
-              <div className="text-center mb-4 sm:mb-6 md:mb-8">
-                <p className="text-blue-600 dark:text-blue-400 text-lg sm:text-xl font-medium mb-1">
-                  Hello, Praveen
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 text-lg sm:text-xl font-medium">
-                  Want to try out a few things?
-                </p>
-              </div>
-
-              {/* Suggestions Section */}
-              <div className="mb-4 sm:mb-6 md:mb-8 px-2 sm:px-4 lg:px-[58px]">
-                <div className="flex items-center justify-between mb-4 sm:mb-6">
-                  <h4 className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Try something new
-                  </h4>
-                  <button className="text-[#9A9B9C] hover:text-gray-600 dark:hover:text-gray-300">
-                    <svg
-                      width="16"
-                      height="14"
-                      viewBox="0 0 16 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M13.6682 0.999999L14.3414 1.7318C14.6421 2.05874 14.7925 2.22221 14.7395 2.3611C14.6866 2.5 14.474 2.5 14.0487 2.5C13.0967 2.5 11.9578 2.3462 11.0834 2.85498C10.5427 3.16954 10.1662 3.71887 9.52938 4.75M1.25 11.5H2.43561C3.88155 11.5 4.60452 11.5 5.21465 11.145C5.75531 10.8305 6.13178 10.2811 6.76862 9.25"
-                        stroke="#141B34"
-                        stroke-width="1.125"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M13.6682 13L14.3414 12.2682C14.6421 11.9413 14.7925 11.7778 14.7395 11.6389C14.6866 11.5 14.474 11.5 14.0487 11.5C13.0967 11.5 11.9578 11.6538 11.0834 11.145C10.4732 10.79 10.0722 10.1361 9.27014 8.8282L7.02787 5.1718C6.22581 3.8639 5.82478 3.20995 5.21465 2.85498C4.60452 2.5 3.88155 2.5 2.43561 2.5H1.25"
-                        stroke="#141B34"
-                        stroke-width="1.125"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                  {studioSuggestions.map((suggestion, index) => (
-                    <div
-                      key={index}
-                      className="bg-white dark:bg-slate-700 rounded-lg p-3 sm:p-4 hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors cursor-pointer border border-gray-200 dark:border-slate-600"
-                    >
-                      <div className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium mb-2 sm:mb-3">
-                        {suggestion.title}
+              {/* Chat Messages Area */}
+              <div className="flex-1 overflow-y-auto mb-4 space-y-6 px-2">
+                {chatMessages.map((message) => (
+                  <React.Fragment key={message.id}>
+                    {message.type === 'user' ? (
+                      /* User Message */
+                      <div className="flex justify-end">
+                        <div className="bg-blue-600 text-white rounded-2xl rounded-tr-sm px-5 py-3 max-w-[80%] shadow-sm">
+                          <p className="text-sm font-medium">
+                            {message.content}
+                          </p>
+                        </div>
                       </div>
-                      <div className="w-full h-20 sm:h-24 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-md flex items-center justify-center">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-                      </div>
+                    ) : (
+                      /* AI Response */
+                      <div className="flex justify-start">
+                        <div className="w-full max-w-full">
+                          {/* AI Header */}
+                          <div className="flex items-center space-x-2 mb-4">
+                            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-md">
+                              <span className="text-white text-sm font-bold">AI</span>
+                            </div>
+                            <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                              Studio Assistant
+                            </span>
+                  </div>
+
+                          {message.showImages && (
+                            <>
+                              {/* Results Grid - Image Cards */}
+                              <div className="grid grid-cols-3 gap-4 mb-4">
+                      {studioSuggestions.slice(0, 3).map((suggestion, index) => (
+                        <div
+                          key={index}
+                          onClick={() => setSelectedImageIndex(index)}
+                          className={`relative group cursor-pointer rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 aspect-square ${
+                            selectedImageIndex === index ? 'ring-4 ring-blue-500 ring-offset-2' : ''
+                          }`}
+                        >
+                          {/* Image with gradient overlay */}
+                          <div className={`absolute inset-0 bg-gradient-to-br ${suggestion.gradient}`}>
+                            <div className="absolute inset-0 bg-black/20"></div>
+                            {/* Decorative elements to simulate landmarks */}
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="text-center text-white p-4">
+                                <div className="w-16 h-16 mx-auto mb-2 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                                  <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                  </svg>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Radio Button - Left Side */}
+                          <div className="absolute top-3 left-3 z-10">
+                            <div 
+                              className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                                selectedImageIndex === index 
+                                  ? 'bg-blue-500 border-blue-500' 
+                                  : 'bg-white/90 backdrop-blur-sm border-white'
+                              }`}
+                            >
+                              {selectedImageIndex === index && (
+                                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              )}
+                            </div>
+                          </div>
+                          
+                          {/* Action buttons overlay - Center */}
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div className="flex space-x-2">
+                              <button 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Handle refresh action
+                                }}
+                                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors"
+                              >
+                                <Icon name="refresh" className="w-5 h-5 text-gray-700" />
+                              </button>
+                              <button 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Handle plus action
+                                }}
+                                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors"
+                              >
+                                <Icon name="plus" className="w-5 h-5 text-gray-700" />
+                          </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+
+                    {/* Description Text */}
+                    <div className="bg-gray-50 dark:bg-slate-700/50 rounded-xl p-4 border border-gray-200 dark:border-slate-600">
+                      <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                        Modern hero section for a travel website. A vibrant collage of world monuments: Eiffel Tower, Taj Mahal, Colosseum, Statue of Liberty with natural wonders (beach, snowy greenery, water fall)
+                      </p>
+                      
+                      {/* Action Icons */}
+                      <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-slate-600">
+                        <div className="flex items-center space-x-3">
+                          <button className="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                            <Icon name="refresh" className="w-4 h-4" />
+                          </button>
+                          <button className="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                          </button>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <button className="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                            </svg>
+                          </button>
+                          <button className="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" />
+                            </svg>
+                          </button>
                 </div>
+              </div>
+            </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </React.Fragment>
+          ))}
+
+          {/* Typing Indicator */}
+          {isTyping && (
+                  <div className="flex justify-start">
+                    <div className="bg-gray-100 dark:bg-slate-700 rounded-2xl rounded-tl-sm px-4 py-3">
+                      <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                </div>
+              </div>
+            </div>
+          )}
+                <div ref={chatEndRef} />
               </div>
 
               {/* Input Bar */}
-              <div className="flex items-center bg-gray-50 dark:bg-slate-700 rounded-lg p-4">
-                <Icon name="plus" className="w-4 h-4 text-black mr-3" />
-                <input
-                  type="text"
-                  placeholder="ask Studio for anything"
-                  className="flex-1 bg-transparent text-sm text-gray-700 dark:text-gray-300 placeholder-black focus:outline-none"
-                />
-                <div className="flex items-center space-x-3 ml-3">
-                  <span className="text-xs text-black dark:text-gray-400">
-                    Studio v 1.0
-                  </span>
-                  <Icon name="chevron-down" className="w-3 h-3 text-gray-400" />
-                  <Icon name="mic" className="w-4 h-4 text-gray-400" />
-                  <Icon name="chart" className="w-4 h-4 text-gray-400" />
+              <div className="bg-white dark:bg-slate-700 rounded-xl border border-gray-200 dark:border-slate-600 shadow-sm">
+                <div className="flex items-center px-4 py-3">
+                  <button className="flex items-center space-x-1 px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors mr-3">
+                    <span>Studio v 1.1</span>
+                    <Icon name="chevron-down" className="w-3 h-3" />
+                  </button>
+                  <input
+                    type="text"
+                    value={aiQuery}
+                    onChange={(e) => setAiQuery(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Ask Studio for anything..."
+                    className="flex-1 bg-transparent text-sm text-gray-700 dark:text-gray-300 placeholder-gray-400 focus:outline-none"
+                  />
+                  <div className="flex items-center space-x-2 ml-3">
+                    <button className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-600 transition-colors">
+                      <Icon name="mic" className="w-4 h-4" />
+                    </button>
+                    <button className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-600 transition-colors">
+                      <Icon name="plus" className="w-4 h-4" />
+                    </button>
+                    <button 
+                      onClick={handleSendMessage}
+                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-5 py-2 text-sm font-medium transition-colors ml-2"
+                    >
+                      Send
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -781,7 +942,7 @@ const Vault = () => {
                   <p className="text-gray-500 dark:text-gray-400 mb-4">
                     Upload files to see them here
                   </p>
-                </div>
+              </div>
               )}
             </div>
           )}
@@ -829,7 +990,7 @@ const Vault = () => {
                   className="hidden"
                   accept="*/*"
                 />
-              </div>
+      </div>
 
               {/* Uploading Files Section */}
               <div className="mb-4 sm:mb-6 flex-1 overflow-y-auto min-h-[300px] ">
@@ -857,7 +1018,7 @@ const Vault = () => {
                               className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                             >
                               <Icon name="x" className="w-3 h-3 sm:w-4 sm:h-4" />
-                            </button>
+                  </button>
                           </div>
                           <div>
                             <div className="flex items-center space-x-2 mt-[5px]">
@@ -896,7 +1057,7 @@ const Vault = () => {
                               >
                                 <Icon name="refresh" className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                                 <span>Try Again</span>
-                              </button>
+                  </button>
                             ) : (
                               <p className="text-xs font-medium text-[#727272] dark:text-white">
                                 {Math.round(file.progress)}%

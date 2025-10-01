@@ -30,9 +30,10 @@ const ChatApp = () => {
   const [newMessage, setNewMessage] = useState("");
   const [showMedia, setShowMedia] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
-  // Mock data for chat contacts
-  const contacts: ChatContact[] = [
+  // State for contacts and messages
+  const [contacts, setContacts] = useState<ChatContact[]>([
     {
       id: "1",
       name: "David McMichael",
@@ -75,54 +76,136 @@ const ChatApp = () => {
       time: "Yesterday",
       isOnline: false,
     },
-  ];
+  ]);
 
-  // Mock data for chat messages
-  const messages: ChatMessage[] = [
-    {
-      id: "1",
-      sender: "David McMichael",
-      message: "Hey, how's the project going?",
-      time: "2:30 PM",
-      isOwn: false,
-    },
-    {
-      id: "2",
-      sender: "You",
-      message: "It's going well! We're on track to finish by the deadline.",
-      time: "2:32 PM",
-      isOwn: true,
-    },
-    {
-      id: "3",
-      sender: "David McMichael",
-      message: "That's great to hear. Any blockers I should know about?",
-      time: "2:33 PM",
-      isOwn: false,
-    },
-    {
-      id: "4",
-      sender: "You",
-      message: "No major blockers. Just need final approval on the design mockups.",
-      time: "2:35 PM",
-      isOwn: true,
-    },
-    {
-      id: "5",
-      sender: "David McMichael",
-      message: "I'll review them this afternoon and get back to you.",
-      time: "2:36 PM",
-      isOwn: false,
-    },
-  ];
+  // Messages per contact
+  const [chatMessages, setChatMessages] = useState<{ [key: string]: ChatMessage[] }>({
+    "1": [
+      {
+        id: "1",
+        sender: "David McMichael",
+        message: "Hey, how's the project going?",
+        time: "2:30 PM",
+        isOwn: false,
+      },
+      {
+        id: "2",
+        sender: "You",
+        message: "It's going well! We're on track to finish by the deadline.",
+        time: "2:32 PM",
+        isOwn: true,
+      },
+    ],
+    "2": [],
+    "3": [],
+    "4": [],
+    "5": [],
+  });
+
+  // Auto-reply messages for each contact
+  const autoReplies: { [key: string]: string[] } = {
+    "1": [
+      "That's great to hear! Keep up the good work.",
+      "Perfect! Let me know if you need any help.",
+      "Sounds good. I'll check back later.",
+      "Excellent progress! Looking forward to the results.",
+    ],
+    "2": [
+      "Thanks for the update! The designs look amazing.",
+      "I love the new color scheme you've chosen.",
+      "Can you share the Figma link?",
+      "This is exactly what we need!",
+    ],
+    "3": [
+      "Great job on fixing that bug!",
+      "Thanks! I'll test it right away.",
+      "Perfect timing, we needed that fixed.",
+      "You're a lifesaver!",
+    ],
+    "4": [
+      "Thanks for scheduling that. I've added it to my calendar.",
+      "Looking forward to the meeting.",
+      "Can you send the agenda beforehand?",
+      "Perfect, see you tomorrow!",
+    ],
+    "5": [
+      "Thank you! It was a team effort.",
+      "Glad you liked it!",
+      "Thanks for the feedback!",
+      "Let's collaborate again soon.",
+    ],
+  };
+
+  const messages = chatMessages[selectedChat] || [];
 
   const selectedContact = contacts.find(contact => contact.id === selectedChat);
 
   const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      // In a real app, this would send the message to the server
-      console.log("Sending message:", newMessage);
+    if (newMessage.trim() && selectedChat) {
+      const currentTime = new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      // Add user message
+      const userMessage: ChatMessage = {
+        id: Date.now().toString(),
+        sender: "You",
+        message: newMessage,
+        time: currentTime,
+        isOwn: true,
+      };
+
+      setChatMessages(prev => ({
+        ...prev,
+        [selectedChat]: [...(prev[selectedChat] || []), userMessage],
+      }));
+
+      // Update contact's last message
+      setContacts(prev =>
+        prev.map(contact =>
+          contact.id === selectedChat
+            ? { ...contact, lastMessage: newMessage, time: currentTime }
+            : contact
+        )
+      );
+
       setNewMessage("");
+      setIsTyping(true);
+
+      // Simulate auto-reply after delay
+      setTimeout(() => {
+        const replies = autoReplies[selectedChat] || [];
+        const randomReply = replies[Math.floor(Math.random() * replies.length)];
+        const replyTime = new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        const autoReplyMessage: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          sender: selectedContact?.name || "Contact",
+          message: randomReply,
+          time: replyTime,
+          isOwn: false,
+        };
+
+        setChatMessages(prev => ({
+          ...prev,
+          [selectedChat]: [...(prev[selectedChat] || []), autoReplyMessage],
+        }));
+
+        // Update contact's last message with reply
+        setContacts(prev =>
+          prev.map(contact =>
+            contact.id === selectedChat
+              ? { ...contact, lastMessage: randomReply, time: replyTime }
+              : contact
+          )
+        );
+
+        setIsTyping(false);
+      }, 1000 + Math.random() * 1500);
     }
   };
 
@@ -284,6 +367,19 @@ const ChatApp = () => {
                     </div>
                   </div>
                 ))}
+                
+                {/* Typing Indicator */}
+                {isTyping && (
+                  <div className="flex justify-start">
+                    <div className="bg-gray-100 dark:bg-slate-700 px-4 py-3 rounded-lg">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Message Input */}
