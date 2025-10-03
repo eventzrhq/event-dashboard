@@ -170,6 +170,26 @@ const Header = ({ onMobileMenuToggle, onNavigate, onSettingsToggle }: HeaderProp
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className=""
+                    onClick={() => onNavigate?.("support")}
+                  >
+                    <Icon
+                      name="support"
+                      className="w-5 h-5 text-gray-600 dark:text-gray-300"
+                    />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Support</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
 
           {/* Mobile Action Buttons */}

@@ -49,6 +49,17 @@ const Vault = () => {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const [showImageCustomization, setShowImageCustomization] = useState(false);
+  const [imageSettings, setImageSettings] = useState({
+    numberOfImages: '03',
+    resolution: '512X768',
+    width: 512,
+    height: 768,
+    quality: 'HD',
+    effects: 'All',
+    realPhoto: false,
+    smoothing: true,
+  });
   const [savedFiles, setSavedFiles] = useState<{[key: string]: Array<{id: string, name: string, type: string, size: string, date: string}>}>({
     'All Files': [],
     'Images': [],
@@ -418,7 +429,9 @@ const Vault = () => {
 
   // Scroll to bottom when new messages arrive
   React.useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (typeof window !== 'undefined') {
+      chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [chatMessages, isTyping]);
 
   return (
@@ -707,7 +720,10 @@ const Vault = () => {
                       {studioSuggestions.slice(0, 3).map((suggestion, index) => (
                         <div
                           key={index}
-                          onClick={() => setSelectedImageIndex(index)}
+                          onClick={() => {
+                            setSelectedImageIndex(index);
+                            setShowImageCustomization(true);
+                          }}
                           className={`relative group cursor-pointer rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 aspect-square ${
                             selectedImageIndex === index ? 'ring-4 ring-blue-500 ring-offset-2' : ''
                           }`}
@@ -948,13 +964,229 @@ const Vault = () => {
           )}
         </div>
 
-          {/* Right Grid - Upload Files */}
+          {/* Right Grid - Upload Files / Image Customization */}
           <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:gap-6 w-full lg:w-1/4 xl:w-1/5 xl:min-w-[320px]">
-            {/* Upload Files Card */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl p-3 sm:p-4 md:p-6 border border-gray-200 dark:border-slate-700 flex flex-col h-fit lg:h-full overflow-hidden">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4 sm:mb-6">
-                Upload Files
-              </h3>
+            {showImageCustomization ? (
+              /* Image Customization Panel */
+              <div className="bg-white dark:bg-slate-800 rounded-xl p-4 border border-gray-200 dark:border-slate-700 flex flex-col overflow-y-auto max-h-[calc(100vh-200px)]">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    Image Settings
+                  </h3>
+                  <button 
+                    onClick={() => setShowImageCustomization(false)}
+                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  >
+                    <Icon name="x" className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="space-y-6">
+                  {/* No of Images */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                      No of Images
+                    </label>
+                    <div className="flex gap-2">
+                      {['01', '02', '03', '04', 'Custom'].map((num) => (
+                        <button
+                          key={num}
+                          onClick={() => setImageSettings(prev => ({ ...prev, numberOfImages: num }))}
+                          className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                            imageSettings.numberOfImages === num
+                              ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
+                              : 'bg-gray-100 text-gray-700 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600'
+                          }`}
+                        >
+                          {num}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Image Resolution */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                      Image Resolution
+                    </label>
+                    <div className="grid grid-cols-3 gap-2 mb-3">
+                      {['512X512', '512X768', '768X768'].map((res) => (
+                        <button
+                          key={res}
+                          onClick={() => setImageSettings(prev => ({ ...prev, resolution: res }))}
+                          className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                            imageSettings.resolution === res
+                              ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 border border-blue-500'
+                              : 'bg-gray-100 text-gray-700 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600'
+                          }`}
+                        >
+                          {res}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {['1080X768', '1080X1080', '2064X768'].map((res) => (
+                        <button
+                          key={res}
+                          onClick={() => setImageSettings(prev => ({ ...prev, resolution: res }))}
+                          className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                            imageSettings.resolution === res
+                              ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 border border-blue-500'
+                              : 'bg-gray-100 text-gray-700 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600'
+                          }`}
+                        >
+                          {res}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Width Slider */}
+                    <div className="mt-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-600 dark:text-gray-400">W</span>
+                        <span className="text-xs font-medium text-gray-900 dark:text-white">{imageSettings.width} PX</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="256"
+                        max="2048"
+                        value={imageSettings.width}
+                        onChange={(e) => setImageSettings(prev => ({ ...prev, width: parseInt(e.target.value) }))}
+                        className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-blue-600"
+                      />
+                    </div>
+
+                    {/* Height Slider */}
+                    <div className="mt-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-600 dark:text-gray-400">H</span>
+                        <span className="text-xs font-medium text-gray-900 dark:text-white">{imageSettings.height} PX</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="256"
+                        max="2048"
+                        value={imageSettings.height}
+                        onChange={(e) => setImageSettings(prev => ({ ...prev, height: parseInt(e.target.value) }))}
+                        className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-blue-600"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Image Quality */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                      Image Quality
+                    </label>
+                    <div className="flex gap-2">
+                      {['Standard', 'HD', 'Genius'].map((quality) => (
+                        <button
+                          key={quality}
+                          onClick={() => setImageSettings(prev => ({ ...prev, quality }))}
+                          className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                            imageSettings.quality === quality
+                              ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 border border-blue-500'
+                              : 'bg-gray-100 text-gray-700 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600'
+                          }`}
+                        >
+                          {quality}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Effects */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                      Effects
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {['All', 'Earthy', 'Vibrant', 'SoftHue'].map((effect) => (
+                        <button
+                          key={effect}
+                          onClick={() => setImageSettings(prev => ({ ...prev, effects: effect }))}
+                          className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                            imageSettings.effects === effect
+                              ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 border border-blue-500'
+                              : 'bg-gray-100 text-gray-700 dark:bg-slate-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600'
+                          }`}
+                        >
+                          {effect}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Real Photo Toggle */}
+                  <div className="flex items-center justify-between py-2">
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">Real Photo</span>
+                    <button
+                      onClick={() => setImageSettings(prev => ({ ...prev, realPhoto: !prev.realPhoto }))}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        imageSettings.realPhoto ? 'bg-gray-300 dark:bg-gray-600' : 'bg-gray-300 dark:bg-gray-600'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          imageSettings.realPhoto ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Smoothing Toggle */}
+                  <div className="flex items-center justify-between py-2">
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">Smoothing</span>
+                    <button
+                      onClick={() => setImageSettings(prev => ({ ...prev, smoothing: !prev.smoothing }))}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        imageSettings.smoothing ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          imageSettings.smoothing ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3 pt-4">
+                    <button
+                      onClick={() => setImageSettings({
+                        numberOfImages: '03',
+                        resolution: '512X768',
+                        width: 512,
+                        height: 768,
+                        quality: 'HD',
+                        effects: 'All',
+                        realPhoto: false,
+                        smoothing: true,
+                      })}
+                      className="flex-1 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors"
+                    >
+                      Reset
+                    </button>
+                    <button
+                      onClick={() => {
+                        console.log('Saved settings:', imageSettings);
+                        setShowImageCustomization(false);
+                        alert('Image settings saved successfully!');
+                      }}
+                      className="flex-1 px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* Upload Files Card */
+              <div className="bg-white dark:bg-slate-800 rounded-xl p-3 sm:p-4 md:p-6 border border-gray-200 dark:border-slate-700 flex flex-col h-fit lg:h-full overflow-hidden">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4 sm:mb-6">
+                  Upload Files
+                </h3>
 
               {/* Drag & Drop Area */}
               <div 
@@ -1079,6 +1311,7 @@ const Vault = () => {
                 Save ({uploadFiles.filter(f => f.status === 'success').length} files)
               </button>
             </div>
+            )}
           </div>
         </div>
       </div>
